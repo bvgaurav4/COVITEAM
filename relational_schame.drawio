@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Page-1" id="f0F9xmiXlt0UBAc9oVBs">
-        <mxGraphModel dx="1566" dy="916" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1775" dy="580" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -19,7 +19,7 @@
                 <mxCell id="P8ioFLtUXDWjbqp6fgjP-59" value="USER" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="100" y="260" width="160" height="160" as="geometry"/>
                 </mxCell>
-                <mxCell id="P8ioFLtUXDWjbqp6fgjP-60" value="+&lt;u&gt;SRN&lt;/u&gt;&lt;br&gt;+NAME&lt;br&gt;+EMAIL&lt;br&gt;+PHONENNUMBER&lt;br&gt;+DEPT&lt;br&gt;+SEMESTER" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="P8ioFLtUXDWjbqp6fgjP-59" vertex="1">
+                <mxCell id="P8ioFLtUXDWjbqp6fgjP-60" value="+&lt;u&gt;SRN&lt;/u&gt;&lt;br&gt;+NAME&lt;br&gt;+EMAIL&lt;br&gt;+PHONENNUMBER&lt;br&gt;+DEPT&lt;br&gt;+SEMESTER&lt;br&gt;+black_marks" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" parent="P8ioFLtUXDWjbqp6fgjP-59" vertex="1">
                     <mxGeometry y="50" width="160" height="110" as="geometry"/>
                 </mxCell>
                 <mxCell id="2" value="STUDY_GROUP" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;" parent="1" vertex="1">
