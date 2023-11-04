@@ -24,6 +24,7 @@ function LoginPage() {
 
 
   return (
+    <Box> 
     <div className='login-container'>
       <form onSubmit={handleSubmit} className='login-form'>
       <h2>Login</h2>
@@ -37,7 +38,7 @@ function LoginPage() {
         </label>
         <button type="submit">Login</button>
       </form>
-    </div>
+    </div></Box>
   );
 }
 
