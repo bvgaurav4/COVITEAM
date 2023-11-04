@@ -3,7 +3,9 @@
 Coviteam is a platform designed to enhance **collaboration** and **productivity** within teams. It provides a centralized space where team members can share ideas, manage tasks, and work together on projects. With Coviteam, you can streamline your team's workflow, improve communication, and foster a culture of transparency and accountability.
 
 ## Install Fiber v2
+```bash
 go get -u github.com/gofiber/fiber/v2
+```
 
 ## to install vite
 ```bash
