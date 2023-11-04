@@ -11,7 +11,23 @@ go get -u github.com/gofiber/fiber/v2
 ```bash
 npm install -g create-vite
 ```
-## to install a painfull depencency which spent 30 min searching for the proper version
+## to install a painfull depencency which spent 30 min searching for the proper version of mantine
 ```bash  
 npm i mantine-react-table @mantine/core@6.0.21 @mantine/hooks@6.0.21 @mantine/dates@6.0.21 @emotion/react @tabler/icons-react dayjs
 ```
+
+## to run client aka ui
+```bash  
+yarn dev
+```
+## or 
+```bash  
+npm run dev
+```
+## to run server
+```bash  
+go run moion.go
+```
+## change the directory to ui or server before running the respective
+
+### use test.tsx and test.css for experimenting 
