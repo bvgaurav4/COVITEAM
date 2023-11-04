@@ -4,5 +4,7 @@ Coviteam is a platform designed to enhance **collaboration** and **productivity*
 
 ```bash  
 npm i mantine-react-table @mantine/core@6.0.21 @mantine/hooks@6.0.21 @mantine/dates@6.0.21 @emotion/react @tabler/icons-react dayjs
+```
 ```bash
 npm install -g create-vite
+```
