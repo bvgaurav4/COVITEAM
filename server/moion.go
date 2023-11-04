@@ -7,6 +7,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 type user struct {
@@ -32,7 +33,10 @@ func main() {
 	}
 	defer db.Close()
 	app := fiber.New()
-
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:5173",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
 	app.Get("/healthcheck", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World 👋!")
 	})
@@ -57,14 +61,15 @@ func main() {
 		insert("users", stuff, db)
 		return c.JSON(users)
 	})
-	app.Get("/newproject", func(c *fiber.Ctx) error {
+	app.Post("/newproject", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World 👋!")
 	})
-	app.Get("/newgroup", func(c *fiber.Ctx) error {
+	app.Post("/newgroup", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World 👋!")
 	})
-	app.Get("/new", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World 👋!")
+	app.Get("/login", func(c *fiber.Ctx) error {
+		fmt.Println("login")
+		return c.SendString(`Hello, World 👋!`)
 	})
 	app.Listen(":4000")
 }
@@ -92,7 +97,6 @@ func insert(table string, stuff string, db *sql.DB) {
 
 	fmt.Println("insert into " + table + " values(" + stuff + ");")
 	var str string = "insert into " + table + " values(" + stuff + ")"
-	fmt.Println(db)
 	if db == nil {
 		fmt.Println("db is nil")
 		return
