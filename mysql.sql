@@ -203,6 +203,14 @@ CREATE TABLE user_domain_interest (
   FOREIGN KEY (domain_id) REFERENCES domain(domain_id)
 );
 ALTER TABLE users
+ADD photo MEDIUMBLOB;
+
+ALTER TABLE projects
+ADD photo MEDIUMBLOB;
+
+ALTER TABLE study_groups
+ADD photo MEDIUMBLOB;
+ALTER TABLE users
 ADD FOREIGN KEY (dept_id) REFERENCES department(dept_id) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE projects
