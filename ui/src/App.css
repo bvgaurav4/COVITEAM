@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  left: 0;
 }
 :root {
   --primary: #61dafb;
@@ -10,8 +11,8 @@
   --quaternary: #888;
 }
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  height: 3em;
+  padding: 0em;
   will-change: filter;
   transition: filter 300ms;
 }
@@ -30,10 +31,10 @@
   align-content: stretch;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #f0eeeeaa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em #ecececaa);
 }
 
 @keyframes logo-spin {

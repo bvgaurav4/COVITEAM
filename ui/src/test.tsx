@@ -1,16 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './test.css';
+import { useDisclosure } from '@mantine/hooks';
+import { Modal, Group, Button } from '@mantine/core';
 
-function Navbar() {
+function Demo() {
+  const [opened, { open, close }] = useDisclosure(false);
+
   return (
-<div class="topnav">
-  <a class="active" href="#home">Home</a>
-  <a href="#news">News</a>
-  <a href="#contact">Contact</a>
-  <a href="#about">About</a>
-</div>
+    <>
+      <Modal opened={opened} onClose={close} withCloseButton={false}>
+        Modal without header, press escape or click on overlay to close
+      </Modal>
+
+      <Group position="center">
+        <Button onClick={open}>Open Modal</Button>
+      </Group>
+    </>
   );
 }
 
-export default Navbar;
+export default Demo;
