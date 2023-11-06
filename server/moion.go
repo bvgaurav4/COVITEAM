@@ -104,13 +104,23 @@ func main() {
 	})
 
 	app.Get("/home", func(c *fiber.Ctx) error {
-		var teststring string = display(db)
+		var str string = string(c.Body())
+		var lol map[string]interface{}
+		err := json.Unmarshal([]byte(str), &lol)
+		if err != nil {
+			fmt.Println("v have error", err)
+		}
+		var teststring string = display(db, lol["table"].(string), "1")
+
 		return c.SendString(teststring)
 	})
 
 	app.Post("/newuser", func(c *fiber.Ctx) error {
 		users := user{}
 		var str string = string(c.Body())
+		// fmt.Println(string(c.))
+		userAgent := c.Get("User-Agent")
+		fmt.Println("User-Agent:", userAgent)
 		fmt.Println(string(c.Body()))
 		err := json.Unmarshal([]byte(str), &users)
 
@@ -172,29 +182,6 @@ func main() {
 	})
 	app.Listen(":4000")
 }
-func display(db *sql.DB) string {
-	var teststring string
-	row, err := db.Query("select * from users;")
-	if err != nil {
-		fmt.Println("v have got an error", err)
-		return teststring
-	}
-	for row.Next() {
-		var artID string
-		var artistID string
-		var users user
-		fmt.Println(row.Columns())
-
-		err2 := row.Scan(&users)
-		if err2 != nil {
-			fmt.Println("v have got an in display in error", err2)
-		}
-		teststring = teststring + artID + artistID + "\n"
-	}
-	fmt.Println("displayed")
-
-	return teststring
-}
 func insert(table string, stuff string, db *sql.DB) error {
 
 	fmt.Println("insert into " + table + " values(" + stuff + ");")
@@ -224,4 +211,42 @@ func formatStruct(s interface{}) string {
 	}
 
 	return strings.Join(values, ",")
+}
+func display(db *sql.DB, lol string, condition string) string {
+	var teststring string
+	row, err := db.Query("select * from " + lol + " where " + condition + ";")
+	if err != nil {
+		fmt.Println("v have got an error", err)
+		fmt.Println("select * from " + lol + " where " + condition + ";")
+		return teststring
+	}
+	columns, _ := row.Columns()
+
+	for row.Next() {
+		values := make([]interface{}, len(columns))
+		pointers := make([]interface{}, len(columns))
+
+		for i := range values {
+			pointers[i] = &values[i]
+		}
+
+		err := row.Scan(pointers...)
+		if err != nil {
+			fmt.Println("v have got an in display in error", err)
+			continue
+		}
+		teststring += "{"
+		for i, val := range values {
+			switch v := val.(type) {
+			case []byte:
+				teststring += fmt.Sprintf("%s: %s\n", columns[i], string(v))
+			default:
+				teststring += fmt.Sprintf("%s: %v\n", columns[i], v)
+			}
+		}
+		teststring += "}\n"
+	}
+	fmt.Println("displayed")
+
+	return teststring
 }
