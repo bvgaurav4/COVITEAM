@@ -1,14 +1,5 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-:root {
-  --primary: #61dafb;
-  --secondary: #282c34;
-  --tertiary: #646cff;
-  --quaternary: #888;
-}
+
+
 .logo {
   height: 3em;
   padding: 0em;
@@ -17,17 +8,13 @@
 }
 .navbar {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   background-color: var(--secondary);
   display: flex;
-  padding: 1em;
+  padding: 2em;
   color: white;
   justify-content: space-evenly;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-content: stretch;
+  flex-direction: column;
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #f0eeeeaa);
@@ -51,13 +38,7 @@
   }
 }
 
-header {
-  background-color: #282c34;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: .3em;
-}
+
 .card {
   padding: 2em;
 }
@@ -65,3 +46,8 @@ header {
 .read-the-docs {
   color: #888;
 }
+/* div {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+} */

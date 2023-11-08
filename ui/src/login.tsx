@@ -1,45 +1,55 @@
-import ReactDOM from 'react-dom/client';
-import React, { useState } from 'react';
-import { Box } from '@mantine/core';
+import {
+  TextInput,
+  PasswordInput,
+  Checkbox,
+  Anchor,
+  Paper,
+  Title,
+  Text,
+  Container,
+  Group,
+  Button,
+  MantineProvider,
+  BackgroundImage
+} from '@mantine/core';
 import './login.css';
-export const endpoints = 'http://localhost:4000/'
+import { useNavigate } from 'react-router-dom';
 
-function LoginPage() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
-  async function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
-    console.log(`Logging in with username: ${username} and password: ${password}`);
 
-    const response = await fetch(`${endpoints}login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    });
-    console.log(response);
+export default function AuthenticationTitle() {
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    navigate('/home');
   }
-
-
   return (
-    <Box> 
-    <div className='login-container'>
-      <form onSubmit={handleSubmit} className='login-form'>
-      <h2>Login</h2>
-        <label>
-          Username:
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-        </label>
-        <label>
-          Password:
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </label>
-        <button type="submit">Login</button>
-      </form>
-    </div></Box>
+    <MantineProvider theme={{colorScheme:'dark'}}>
+      <form>
+    <Container size={500} my={40}>
+      <Title ta="center" className='title' color='white'>
+        Welcome back!
+      </Title>
+      <Text c="dimmed" size="sm" ta="center" mt={5}>
+        Do not have an account yet?{' '}
+        <Anchor size="sm" component="button">
+          Create account
+        </Anchor>
+      </Text>
+
+      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+        <TextInput label="Email" placeholder="you@mantine.dev" required />
+        <PasswordInput label="Password" placeholder="Your password" required mt="md" />
+        <Group justify="space-between" mt="lg">
+          <Checkbox label="Remember me" />
+          <a href='/forgot'>Forgot password?</a>
+
+        </Group>
+        <Button fullWidth mt="xl" onClick={handleLogin}>
+          Sign in
+        </Button>
+      </Paper>
+    </Container>
+    </form>
+    </MantineProvider>
   );
 }
-
-export default LoginPage;

@@ -2,6 +2,7 @@ import { Card, Image, Text, Badge, Button, Group,Tabs } from '@mantine/core';
 import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 function Demo() {
   return (
+    <>
     <Tabs defaultValue="gallery" >
     <Tabs.List grow>
       <Tabs.Tab value="gallery" icon={<IconPhoto size="0.8rem" />}>Gallery</Tabs.Tab>
@@ -21,6 +22,7 @@ function Demo() {
       Settings tab content
     </Tabs.Panel>
   </Tabs>
+  </>
   );
 }
 export default Demo

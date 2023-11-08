@@ -1,34 +1,12 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .login-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    padding: auto;
-    align-items: center;
-  }
-  
-  .login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-body {
-    font-family: 'Poppins';
-    background-size: cover;
-    background-repeat: repeat-y;
-    background-image: url("assets/doodle2.jpg");
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.title {
+  font-family: Greycliff CF, var(--mantine-font-family);
+  font-weight: 900;
+}
+body{
+  background-image: url("assets/doodle2.jpg");
+  background-size: cover; /* You can adjust this as needed */
+  justify-content: center ;
+}
+root{
+  background-image: url("doodles1.jpg");
 }

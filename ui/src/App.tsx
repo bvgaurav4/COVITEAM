@@ -17,20 +17,19 @@ function App() {
   return (
     <div>
         <nav className="navbar">
+          <div>
   <a href="/home"><img src='/vite.svg' className='logo'></img></a>
   <a href="/login">Login</a>
-  <a href="/login">Login/ sign up</a>
+  <a href="/login">Login/ sign up</a> 
   <ActionIcon variant="default"><IconSettings size="1rem" /></ActionIcon>
-        </nav>
   <CreateGroup />
   <CreateProject />
-        <MantineProvider theme={{colorScheme:'dark'}}>
-        <Box>
-        <div style={{top:'100px',left:'0px', position:"absolute"}}>
-        <Lol/>
-        </div>  
-        </Box>
-        </MantineProvider>
+  {/* <TextInput></TextInput> */}
+  </div>
+  <Lol/>
+  <div className="search">
+    </div>
+        </nav>
     </div>
   )
 }
