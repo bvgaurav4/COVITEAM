@@ -43,7 +43,7 @@ export default function AuthenticationTitle() {
   return (
     <MantineProvider theme={{colorScheme:'dark'}}>
       <form>
-    <Container size={500} my={40}>
+    <Container size={500} my={40} >
       <Title ta="center" className='title' color='white'>
         Welcome back!
       </Title>

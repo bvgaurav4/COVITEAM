@@ -103,9 +103,10 @@ func main() {
 		return c.SendString("meow  meow nigga")
 	})
 
-	app.Get("/home", func(c *fiber.Ctx) error {
+	app.Post("/home", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())
 		var lol map[string]interface{}
+		fmt.Println("inside home")
 		err := json.Unmarshal([]byte(str), &lol)
 		if err != nil {
 			fmt.Println("v have error", err)

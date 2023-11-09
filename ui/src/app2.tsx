@@ -16,10 +16,37 @@ import Demo2 from './test.tsx';
 } from '@mantine/core';
 import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 
+export const endpoints = 'https://localhost:4000/'
 
 export default function AppShellDemo() {
+
+  const projects = ['Project 1', 'Project 2', 'Project 3', 'Project 4', 'Project 5'];
+  const groups = ['Group 1', 'Group 2', 'Group 3', 'Group 4', 'Group 5'];
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+  const [showProjects, setShowProjects] = useState(false);
+  const [showGroups, setShowGroups] = useState(false);
+  const handleLogin = async (table) => {
+    const response = await fetch(`${endpoints}home`, {
+      method: "Post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({"table":  `${table}`}),
+    });
+    console.log(response)
+   
+  }
+  function handleProject(){
+    handleLogin("projects");
+    setShowGroups(false);
+    setShowProjects(true);
+  }
+  function handleGroup(){
+    handleLogin("groups");
+    setShowGroups(true);
+    setShowProjects(false);
+  }
   function oj(){
     console.log('ok')
   }
@@ -36,8 +63,8 @@ export default function AppShellDemo() {
       navbar={
         <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }} >
           <Text>Application navbar</Text>
-          <Button variant="outline" color="violet" onClick={oj}>Your projects</Button>
-          <Button variant="outline" color="violet" onClick={oj}>Your groups</Button>
+          <Button variant="outline" color="violet" onClick={handleProject}>Your projects</Button>
+          <Button variant="outline" color="violet" onClick={handleGroup}>Your groups</Button>
           <Button variant="outline" color="violet" onClick={oj}>Recommended projects</Button>
           <Button variant="outline" color="violet" onClick={oj}>Recommended groups</Button>
 
@@ -77,16 +104,12 @@ export default function AppShellDemo() {
       }
     >
       <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly" ,flexWrap:"wrap"}}>
-        <Demo2/><Demo2/><Demo2/>
-        <Demo2/><Demo2/><Demo2/>
-        <Demo2/><Demo2/><Demo2/>
-        <Demo2/><Demo2/><Demo2/>
-        <Demo2/><Demo2/><Demo2/>
-        <Demo2/><Demo2/><Demo2/>
-        <Demo2/><Demo2/><Demo2/>
-        <Demo2/><Demo2/><Demo2/>
-          
-
+      {showProjects && projects.map((project, index) => (
+            <Demo2 key={index} project={project} />
+          ))}
+          {showGroups && groups.map((group, index) => (
+            <Demo2 key={index} group={group} />
+          ))}
       </div>
     </AppShell></MantineProvider>
   );
