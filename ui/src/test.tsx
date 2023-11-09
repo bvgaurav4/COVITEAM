@@ -1,28 +1,27 @@
-import { Card, Image, Text, Badge, Button, Group,Tabs } from '@mantine/core';
-import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
-function Demo() {
+import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
+
+function Demo2() {
   return (
-    <>
-    <Tabs defaultValue="gallery" >
-    <Tabs.List grow>
-      <Tabs.Tab value="gallery" icon={<IconPhoto size="0.8rem" />}>Gallery</Tabs.Tab>
-      <Tabs.Tab value="messages" icon={<IconMessageCircle size="0.8rem" />}>Messages</Tabs.Tab>
-      <Tabs.Tab value="settings" icon={<IconSettings size="0.8rem" />}>Settings</Tabs.Tab>
-    </Tabs.List>
+    <Card shadow="sm" padding="lg" radius="md" withBorder style={{width:"250px",height:"260px "}}>
+      <Card.Section component="a" href="https://mantine.dev/">
+      </Card.Section>
 
-    <Tabs.Panel value="gallery" pt="xs">
-      Gallery tab content
-    </Tabs.Panel>
+      <Group position="apart" mt="md" mb="xs">
+        <Text weight={500}>Norway Fjord Adventures</Text>
+        <Badge color="pink" variant="light">
+          On Sale
+        </Badge>
+      </Group>
 
-    <Tabs.Panel value="messages" pt="xs">
-      Messages tab content
-    </Tabs.Panel>
+      <Text size="sm" color="dimmed">
+        With Fjord Tours you can explore more of the magical fjord landscapes with tours and
+        activities on and around the fjords of Norway
+      </Text>
 
-    <Tabs.Panel value="settings" pt="xs">
-      Settings tab content
-    </Tabs.Panel>
-  </Tabs>
-  </>
+      <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+        Book classic tour now
+      </Button>
+    </Card>
   );
 }
-export default Demo
+export default Demo2;

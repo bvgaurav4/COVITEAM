@@ -10,17 +10,35 @@ import {
   Group,
   Button,
   MantineProvider,
-  BackgroundImage
 } from '@mantine/core';
 import './login.css';
 import { useNavigate } from 'react-router-dom';
-
-
+import React from 'react';
+import { useState } from 'react';
+const endpoints = 'http://localhost:4000'
 
 export default function AuthenticationTitle() {
   const navigate = useNavigate();
-  const handleLogin = () => {
-    navigate('/home');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const handleLogin = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const response = await fetch(`${endpoints}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({email, password}),
+    });
+    console.log(response)
+    if (response.ok) {
+      console.log('login successful');
+      navigate('/home');
+    } else {
+      console.log('login failed');
+      navigate('/forgot');
+    }
+   
   }
   return (
     <MantineProvider theme={{colorScheme:'dark'}}>
@@ -37,8 +55,8 @@ export default function AuthenticationTitle() {
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput label="Email" placeholder="you@mantine.dev" required />
-        <PasswordInput label="Password" placeholder="Your password" required mt="md" />
+        <TextInput label="Email" placeholder="you@mantine.dev" required value={email} onChange={(e)=>setEmail(e.currentTarget.value)} />
+        <PasswordInput label="Password" placeholder="Your password" required mt="md" value={password} on onChange={(e)=>setPassword(e.currentTarget.value)}/>
         <Group justify="space-between" mt="lg">
           <Checkbox label="Remember me" />
           <a href='/forgot'>Forgot password?</a>

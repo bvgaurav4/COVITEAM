@@ -10,7 +10,7 @@
 }
 
 <Card shadow="sm" padding="md" radius="md" className="login-card">
-<div className='login-container'>
+<div className='login-containe  r'>
   <form onSubmit={handleSubmit} className='login-form'>
   <h2>Login</h2>
     <label>

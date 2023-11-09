@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Demo2 from './test.tsx';
   import {
   AppShell,
   Navbar,
@@ -41,7 +42,6 @@ export default function AppShellDemo() {
           <Button variant="outline" color="violet" onClick={oj}>Recommended groups</Button>
 
 
-
         </Navbar>
       }
       aside={
@@ -76,11 +76,16 @@ export default function AppShellDemo() {
         </Header>
       }
     >
-      <Text> mapping function im using too do this basically im using this place to display the main stuff</Text>
-      <div>ok noices
-        <Button variant="outline" color="violet">Your projects</Button>
-    
-
+      <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly" ,flexWrap:"wrap"}}>
+        <Demo2/><Demo2/><Demo2/>
+        <Demo2/><Demo2/><Demo2/>
+        <Demo2/><Demo2/><Demo2/>
+        <Demo2/><Demo2/><Demo2/>
+        <Demo2/><Demo2/><Demo2/>
+        <Demo2/><Demo2/><Demo2/>
+        <Demo2/><Demo2/><Demo2/>
+        <Demo2/><Demo2/><Demo2/>
+          
 
       </div>
     </AppShell></MantineProvider>

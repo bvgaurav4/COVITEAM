@@ -176,9 +176,23 @@ func main() {
 		}
 		return c.SendString("Hello, World 👋!")
 	})
-	app.Get("/login", func(c *fiber.Ctx) error {
-		fmt.Println("login")
-		return c.SendString(`Hello, World 👋!`)
+	app.Post("/login", func(c *fiber.Ctx) error {
+		var str string = string(c.Body())
+		var lol map[string]interface{}
+		err := json.Unmarshal([]byte(str), &lol)
+		if err != nil || lol["email"] == "" || lol["password"] == "" {
+			fmt.Println("v have error", err)
+			return c.Status(500).SendString("Failed to insert data: ")
+		} else {
+			fmt.Println(str)
+			var teststring string = display(db, "users", "email=\""+lol["email"].(string)+"\" and phone_number=\""+lol["password"].(string)+"\"")
+			if teststring != "" {
+				return c.Status(200).SendString("ok")
+			} else {
+				return c.Status(500).SendString("Failed to insert data: ")
+			}
+		}
+
 	})
 	app.Listen(":4000")
 }
