@@ -24,7 +24,6 @@ function App() {
   <ActionIcon variant="default"><IconSettings size="1rem" /></ActionIcon>
   <CreateGroup />
   <CreateProject />
-  {/* <TextInput></TextInput> */}
   </div>
   <Lol/>
   <div className="search">

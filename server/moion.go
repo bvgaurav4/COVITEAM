@@ -113,7 +113,7 @@ func main() {
 		}
 		var teststring string = display(db, lol["table"].(string), "1")
 
-		return c.SendString(teststring)
+		return c.JSON(fiber.Map{"body": teststring})
 	})
 
 	app.Post("/newuser", func(c *fiber.Ctx) error {
@@ -236,6 +236,7 @@ func display(db *sql.DB, lol string, condition string) string {
 		return teststring
 	}
 	columns, _ := row.Columns()
+	var result []map[string]interface{}
 
 	for row.Next() {
 		values := make([]interface{}, len(columns))
@@ -250,18 +251,22 @@ func display(db *sql.DB, lol string, condition string) string {
 			fmt.Println("v have got an in display in error", err)
 			continue
 		}
-		teststring += "{"
+		rowResult := make(map[string]interface{})
 		for i, val := range values {
 			switch v := val.(type) {
 			case []byte:
-				teststring += fmt.Sprintf("%s: %s\n", columns[i], string(v))
+				rowResult[columns[i]] = string(v)
 			default:
-				teststring += fmt.Sprintf("%s: %v\n", columns[i], v)
+				rowResult[columns[i]] = v
 			}
 		}
-		teststring += "}\n"
+		result = append(result, rowResult)
 	}
-	fmt.Println("displayed")
 
-	return teststring
+	jsonData, err := json.Marshal(result)
+	if err != nil {
+		fmt.Println("Error converting to JSON:", err)
+		return ""
+	}
+	return string(jsonData)
 }

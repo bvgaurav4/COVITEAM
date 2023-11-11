@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import Demo2 from './test.tsx';
   import {
   AppShell,
@@ -16,40 +16,56 @@ import Demo2 from './test.tsx';
 } from '@mantine/core';
 import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
 
-export const endpoints = 'https://localhost:4000/'
+export const endpoints = 'http://localhost:4000'
 
 export default function AppShellDemo() {
 
-  const projects = ['Project 1', 'Project 2', 'Project 3', 'Project 4', 'Project 5'];
-  const groups = ['Group 1', 'Group 2', 'Group 3', 'Group 4', 'Group 5'];
+
+  var groups = ['Group 1', 'Group 2', 'Group 3', 'Group 4', 'Group 5'," lol"];
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
   const [showGroups, setShowGroups] = useState(false);
+  var [projects, setProjects] = useState(null);
+
   const handleLogin = async (table) => {
-    const response = await fetch(`${endpoints}home`, {
+    const response = await fetch(`${endpoints}/home`, {
       method: "Post",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json",  
       },
       body: JSON.stringify({"table":  `${table}`}),
     });
-    console.log(response)
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data)
+      return data.body;
+    } else {
+      console.log('Request failed');
+      return null;
+    }
    
   }
+  projects = handleLogin("project");
+
+
   function handleProject(){
-    handleLogin("projects");
     setShowGroups(false);
     setShowProjects(true);
   }
+
   function handleGroup(){
     handleLogin("groups");
     setShowGroups(true);
     setShowProjects(false);
   }
+
+
   function oj(){
     console.log('ok')
   }
+
+
   return (
     <MantineProvider theme={{colorScheme:'dark'}}>
     <AppShell
@@ -104,8 +120,8 @@ export default function AppShellDemo() {
       }
     >
       <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly" ,flexWrap:"wrap"}}>
-      {showProjects && projects.map((project, index) => (
-            <Demo2 key={index} project={project} />
+      {showProjects && projects.map((index) => (
+            <Demo2 key={index}  />
           ))}
           {showGroups && groups.map((group, index) => (
             <Demo2 key={index} group={group} />
