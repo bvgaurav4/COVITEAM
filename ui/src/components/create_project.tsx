@@ -42,7 +42,7 @@ function CreateGroup() {
     </Modal>
  
     <Group position="right">
-    <Button onClick={open}>Create group</Button>
+    <Button variant="default"  onClick={open}  radius="md" style={{width:"250px",height:"260px "}}></Button>
     </Group></MantineProvider>
   )
 }export default CreateGroup 

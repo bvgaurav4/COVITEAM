@@ -15,6 +15,10 @@ import Demo2 from './test.tsx';
   TextInput
 } from '@mantine/core';
 import { IconPhoto, IconMessageCircle, IconSettings } from '@tabler/icons-react';
+import  Creategroup from "./components/create_group.tsx"
+import  Createproject from "./components/create_project.tsx"
+
+
 
 export const endpoints = 'http://localhost:4000'
 
@@ -85,7 +89,6 @@ export default function AppShellDemo() {
       asideOffsetBreakpoint="sm"
       navbar={
         <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }} >
-          <Text>Application navbar</Text>
           <Button variant="outline" color="violet" onClick={handleProject}>Your projects</Button>
           <Button variant="outline" color="violet" onClick={handleGroup}>Your groups</Button>
           <Button variant="outline" color="violet" onClick={oj}>Recommended projects</Button>
@@ -125,13 +128,16 @@ export default function AppShellDemo() {
       }
     >
       <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly" ,flexWrap:"wrap"}}>
-      {showProjects && JSON.parse(projects).map((index) => (
+      {JSON.parse(projects) && showProjects && JSON.parse(projects).map((index) => (
             <Demo2 key={index}  />
-          ))}
+          )
+          )}
           {JSON.parse(groups) && showGroups && JSON.parse(groups).map((group, index) => (
             <Demo2 key={index} group={group} />
           ))}
-      </div>
+     { (showGroups) &&  <Creategroup/>}
+     { (showProjects) &&  <Createproject/>}
+      </div>          
     </AppShell>
     </MantineProvider>
   );
