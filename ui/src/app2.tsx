@@ -21,16 +21,17 @@ export const endpoints = 'http://localhost:4000'
 export default function AppShellDemo() {
 
 
-  var groups = ['Group 1', 'Group 2', 'Group 3', 'Group 4', 'Group 5'," lol"];
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
   const [showGroups, setShowGroups] = useState(false);
   var [projects, setProjects] = useState(null);
+  var [groups, setGroups] = useState(null);
+
 
   const handleLogin = async (table) => {
     const response = await fetch(`${endpoints}/home`, {
-      method: "Post",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",  
       },
@@ -38,7 +39,6 @@ export default function AppShellDemo() {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log(data)
       return data.body;
     } else {
       console.log('Request failed');
@@ -46,7 +46,15 @@ export default function AppShellDemo() {
     }
    
   }
-  projects = handleLogin("project");
+
+  useEffect(() => {
+    handleLogin(`project`).then((data) => {
+      setProjects(data);
+    });
+    handleLogin(`study_group`).then((data) => {
+      setGroups(data);
+    });
+  }, []);
 
 
   function handleProject(){
@@ -55,7 +63,6 @@ export default function AppShellDemo() {
   }
 
   function handleGroup(){
-    handleLogin("groups");
     setShowGroups(true);
     setShowProjects(false);
   }
@@ -83,8 +90,6 @@ export default function AppShellDemo() {
           <Button variant="outline" color="violet" onClick={handleGroup}>Your groups</Button>
           <Button variant="outline" color="violet" onClick={oj}>Recommended projects</Button>
           <Button variant="outline" color="violet" onClick={oj}>Recommended groups</Button>
-
-
         </Navbar>
       }
       aside={
@@ -120,13 +125,14 @@ export default function AppShellDemo() {
       }
     >
       <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly" ,flexWrap:"wrap"}}>
-      {showProjects && projects.map((index) => (
+      {showProjects && JSON.parse(projects).map((index) => (
             <Demo2 key={index}  />
           ))}
-          {showGroups && groups.map((group, index) => (
+          {JSON.parse(groups) && showGroups && JSON.parse(groups).map((group, index) => (
             <Demo2 key={index} group={group} />
           ))}
       </div>
-    </AppShell></MantineProvider>
+    </AppShell>
+    </MantineProvider>
   );
 }

@@ -106,7 +106,6 @@ func main() {
 	app.Post("/home", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())
 		var lol map[string]interface{}
-		fmt.Println("inside home")
 		err := json.Unmarshal([]byte(str), &lol)
 		if err != nil {
 			fmt.Println("v have error", err)
@@ -119,7 +118,6 @@ func main() {
 	app.Post("/newuser", func(c *fiber.Ctx) error {
 		users := user{}
 		var str string = string(c.Body())
-		// fmt.Println(string(c.))
 		userAgent := c.Get("User-Agent")
 		fmt.Println("User-Agent:", userAgent)
 		fmt.Println(string(c.Body()))
