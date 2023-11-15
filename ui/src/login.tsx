@@ -68,7 +68,7 @@ export default function AuthenticationTitle() {
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <TextInput label="Email" placeholder="you@mantine.dev" required value={email} onChange={(e)=>setEmail(e.currentTarget.value)} />
-        <PasswordInput label="Password" placeholder="Your password" required mt="md" value={password} onChange={(e)=>setPassword(e.currentTarget.value)}/>
+        <PasswordInput label="Password" placeholder="Your password" required mt="md" value={password}  onChange={(e)=>setPassword(e.currentTarget.value)}/>
         <Group justify="space-between" mt="lg">
           <Checkbox label="Remember me" />
           <a href='/forgot'>Forgot password?</a>

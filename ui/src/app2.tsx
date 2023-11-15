@@ -36,7 +36,9 @@ export default function AppShellDemo() {
   var [projects, setProjects] = useState(null);
   var [groups, setGroups] = useState(null);
 
-
+  if (userEmail == null) {
+    navigate('/');
+  }
   const handleLogin = async (table) => {
     const response = await fetch(`${endpoints}/home`, {
       method: "POST",
@@ -56,10 +58,10 @@ export default function AppShellDemo() {
   }
 
   useEffect(() => {
-    handleLogin(`project`).then((data) => {
+    handleLogin(`projects`).then((data) => {
       setProjects(data);
     });
-    handleLogin(`study_group`).then((data) => {
+    handleLogin(`study_groups`).then((data) => {
       setGroups(data);
     });
   }, []);

@@ -86,7 +86,7 @@ type user_domain_interests struct {
 func main() {
 	fmt.Println("Hello World")
 
-	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/coviteam")
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/coviteam4")
 
 	if err != nil {
 		fmt.Println("v have and error", err.Error())
@@ -97,6 +97,7 @@ func main() {
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "http://localhost:5173",
+
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 	app.Get("/healthcheck", func(c *fiber.Ctx) error {
@@ -184,7 +185,7 @@ func main() {
 			return c.Status(500).SendString("Failed to insert data: ")
 		} else {
 			fmt.Println(str)
-			var teststring string = display(db, "users", "email=\""+lol["email"].(string)+"\" and phone_number=\""+lol["password"].(string)+"\"")
+			var teststring string = display(db, "users", "email=\""+lol["email"].(string)+"\" and password=\""+lol["password"].(string)+"\"")
 			if teststring != "" {
 				return c.Status(200).SendString("ok")
 			} else {
