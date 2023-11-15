@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import AuthenticationTitle  from './login.tsx'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ForgotPassword from './forgot.tsx'
@@ -15,7 +14,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<AuthenticationTitle/>} />
         <Route path="/login" element={<AuthenticationTitle />} />
         <Route path="/home" element={<Demo />} />
-        <Route path="/home1" element={<App />} />
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/group" element={<Group />} />
       </Routes>
