@@ -1,21 +1,20 @@
 import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
 
-function Demo2() {
+function Demo2({title,description,href,badgeText}) {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder style={{width:"250px",height:"260px "}}>
-      <Card.Section component="a" href="https://mantine.dev/">
+      <Card.Section component="a" href={href}>
       </Card.Section>
 
       <Group position="apart" mt="md" mb="xs">
-        <Text weight={500}>Norway Fjord Adventures</Text>
+        <Text weight={500}>{title}</Text>
         <Badge color="pink" variant="light">
-          On Sale
+          {badgeText}
         </Badge>
       </Group>
 
       <Text size="sm" color="dimmed">
-        With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-        activities on and around the fjords of Norway
+        {description}
       </Text>
 
       <Button variant="light" color="blue" fullWidth mt="md" radius="md">

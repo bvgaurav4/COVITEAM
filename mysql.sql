@@ -1,4 +1,3 @@
--- ok noice
 -- create database named coviteam
 -- create table named users 
 -- +--------------+-------------+------+-----+---------+-------+

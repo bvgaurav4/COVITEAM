@@ -1,7 +1,6 @@
 import { useState , useEffect} from 'react';
-import Demo2 from './test.tsx';
-import { IconCheck } from '@tabler/icons-react';
-import {
+import Demo2 from '../test.tsx';
+  import {
   AppShell,
   Navbar,
   Header,
@@ -15,27 +14,25 @@ import {
   MantineProvider,
   TextInput
 } from '@mantine/core';
-import  Creategroup from "./components/create_group.tsx"
-import Notifi from "./components/notification.tsx"
-import  Createproject from "./components/create_project.tsx"
-import { getUserEmail,logout } from './login.tsx';
-import { Notification } from '@mantine/core';
-
 import { useNavigate } from 'react-router-dom';
+import { getUserEmail,logout } from '../login.tsx';
+
 
 
 export const endpoints = 'http://localhost:4000'
 
-export default function AppShellDemo() {
-  const navigate = useNavigate();
-  const userEmail = getUserEmail();
-  const theme = useMantineTheme();
-  const [opened, setOpened] = useState(false);
-  const [showProjects, setShowProjects] = useState(false);
-  const [showGroups, setShowGroups] = useState(false);
-  var [projects, setProjects] = useState(null);
-  var [groups, setGroups] = useState(null);
+export default function Group() {
 
+
+    function handleLogout(){
+        logout();
+        navigate('/login');
+      }
+      const navigate = useNavigate();
+
+  const theme = useMantineTheme();
+  const userEmail = getUserEmail();
+  const [opened, setOpened] = useState(false);
 
   const handleLogin = async (table) => {
     const response = await fetch(`${endpoints}/home`, {
@@ -54,31 +51,6 @@ export default function AppShellDemo() {
     }
    
   }
-
-  useEffect(() => {
-    handleLogin(`project`).then((data) => {
-      setProjects(data);
-    });
-    handleLogin(`study_group`).then((data) => {
-      setGroups(data);
-    });
-  }, []);
-
-function handleLogout(){
-  logout();
-  navigate('/login');
-}
-  function handleProject(){
-    setShowGroups(false);
-    setShowProjects(true);
-  }
-
-  function handleGroup(){
-    setShowGroups(true);
-    setShowProjects(false);
-  }
-
-
   function oj(){
     console.log('ok')
   }
@@ -95,33 +67,22 @@ function handleLogout(){
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       navbar={
-        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 400, lg: 300}} >
-          <Button variant="outline" color="violet" onClick={handleProject}>Your projects</Button>
-          <br></br>
-          <Button variant="outline" color="violet" onClick={handleGroup}>Your groups</Button>
-          <br></br>
-          <Button variant="outline" color="violet" onClick={oj}>Recommended projects</Button> 
-          <br></br>
-          <Button variant="outline" color="violet" onClick={oj}>Recommended groups</Button>
+        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }} >
+          <Button variant="outline" color="violet" >Your groups</Button>
         </Navbar>
       }
       aside={
         <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
-          <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 400 }} >
-            <Notification color="violet" title="We notify you that">
-        You are now obligated to give a star to Mantine project on GitHub
-      </Notification>
-      <br></br>
-   
-     
-      <Notifi/>
-
-
+          <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 400 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Button variant="outline" color="violet" >Your groups</Button>
+              <Button variant="outline" color="violet" >Your projects</Button>
+            </div>
           </Aside>
         </MediaQuery>
       }
       footer={
-        <Footer height={100} p="md" >
+        <Footer height={100} p="md">
           <div style={{display: 'flex', height: '100%' ,justifyContent:'space-between'}}>
             <div style={{display: 'flex', alignItems: 'center', height: '100%' ,justifyContent:'space-between'}}>
           <div><Button variant="transparent" color="violet" onClick={handleLogout }>logout/change account</Button>
@@ -132,9 +93,7 @@ function handleLogout(){
             <div style={{display: 'flex', height: '100%' ,justifyContent:'space-between'}}>
             <Button variant="outline" color="violet" onClick={oj}>About us</Button>
             </div>
-            </div>
-
-        </Footer>
+            </div>        </Footer>
       }
       header={
         <Header height={{ base: 100, md: 100 }} p="md">
@@ -156,20 +115,31 @@ function handleLogout(){
         </Header>
       }
       styles={(theme) => ({
-        main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0]},
+        main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] , display:"flex", flexDirection:"column", justifyContent:"space-between" ,flexWrap:"wrap"},
       })}
     >
-      <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly" ,flexWrap:"wrap"}}>
-      {JSON.parse(projects) && showProjects && JSON.parse(projects).map((prog,index) => (
-            <Demo2  key={prog.project_id} title={prog.project_id} description={prog.description} href={'nones'} badgeText={'none'} />
-          )
-          )}
-          {JSON.parse(groups) && showGroups && JSON.parse(groups).map((group, index) => (
-            <Demo2 title={group.name} description={'none'} href={'nones'} badgeText={'none'}  />
-          ))}
-     { (showGroups) &&  <Creategroup/>}
-     { (showProjects) &&  <Createproject/>}
+      <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between" ,flexWrap:"wrap", padding:''}}>
+        <div >
+        <Demo2></Demo2>
+        <Demo2></Demo2>
+        <Demo2></Demo2>
+        <Demo2></Demo2>
+        <Demo2></Demo2>
+        <Demo2></Demo2>
+        </div>
+        <div>
+        <Demo2></Demo2>
+        <Demo2></Demo2>
+
+        <Demo2></Demo2>
+        <Demo2></Demo2>
+        <Demo2></Demo2>
+
+        <Demo2></Demo2>
+        </div>
       </div>          
+        <TextInput placeholder='message' style={{width:'100%', position:'fixed', bottom:'100px'}}></TextInput>
+        <Button style={{right:'400px', bottom:'100px' ,position:'fixed'}}></Button>
     </AppShell>
     </MantineProvider>
   );

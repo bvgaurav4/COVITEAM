@@ -1,13 +1,11 @@
-import { Modal, Group,Box, Button,MantineProvider,Container,Title,Paper,TextInput} from '@mantine/core';
+import { Modal, Group, Button,MantineProvider,Container,Title,Paper,TextInput} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import './create_group.css'
-import myImage from "./doodles1.jpg";
 import { useState } from 'react';
 const endpoints = 'http://localhost:4000/'
 
 function CreateGroup() {
   const [Group_name, setGrpname] = useState('');
-  const [desc, setdesc] = useState('');
   const [email, setEmail] = useState('');
 
 

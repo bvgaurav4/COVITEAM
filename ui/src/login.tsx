@@ -16,11 +16,21 @@ import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import { useState } from 'react';
 const endpoints = 'http://localhost:4000'
+const userEmail = localStorage.getItem('user');
+export function getUserEmail() {
+  return localStorage.getItem('user');
+}
+export function logout() {
+  userEmail==null;
+  localStorage.removeItem('user');
 
+}
 export default function AuthenticationTitle() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [email, setEmail] = useState('');
+
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     const response = await fetch(`${endpoints}/login`, {
@@ -33,7 +43,9 @@ export default function AuthenticationTitle() {
     console.log(response)
     if (response.ok) {
       console.log('login successful');
+      localStorage.setItem('user', email);
       navigate('/home');
+
     } else {
       console.log('login failed');
       navigate('/forgot');

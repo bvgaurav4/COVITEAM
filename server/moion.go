@@ -193,6 +193,25 @@ func main() {
 		}
 
 	})
+	app.Post("/removerow", func(c *fiber.Ctx) error {
+		var str string = string(c.Body())
+		var lol map[string]interface{}
+		err := json.Unmarshal([]byte(str), &lol)
+		if err != nil {
+
+			fmt.Println("v have error", err)
+			return c.Status(500).SendString("Failed to insert data: ")
+		} else {
+			fmt.Println(str)
+			_, err := db.Exec("delete from " + lol["table"].(string) + " where " + lol["condition"].(string) + ";")
+			if err != nil {
+				fmt.Println("v have got an error", err)
+				return c.Status(500).SendString("Failed to insert data: ")
+			}
+			return c.Status(200).SendString("ok")
+		}
+	})
+
 	app.Listen(":4000")
 }
 func insert(table string, stuff string, db *sql.DB) error {
