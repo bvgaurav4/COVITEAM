@@ -6,6 +6,8 @@
 - create tables, group_users_count and project_members_count and add triggers so that these counts are updated every time new user is added to the group/project
 - Add procedures done
 - Add functions done
-- add logs  
+- add logs  done
+- correleated query
+- nested query
 
   
