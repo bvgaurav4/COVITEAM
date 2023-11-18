@@ -39,13 +39,13 @@ export default function AppShellDemo() {
   if (userEmail == null) {
     navigate('/');
   }
-  const handleLogin = async (table) => {
-    const response = await fetch(`${endpoints}/home`, {
+  const getgrops = async (table) => {
+    const response = await fetch(`${endpoints}/getgrps`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",  
       },
-      body: JSON.stringify({"table":  `${table}`}),
+      body: JSON.stringify({"email":  `${userEmail}`}),
     });
     if (response.ok) {
       const data = await response.json();
@@ -56,12 +56,28 @@ export default function AppShellDemo() {
     }
    
   }
-
+  const getproj = async (table) => {
+    const response = await fetch(`${endpoints}/getproj`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",  
+      },
+      body: JSON.stringify({"email":  `${userEmail}`}),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data.body;
+    } else {
+      console.log('Request failed');
+      return null;
+    }
+   
+  }
   useEffect(() => {
-    handleLogin(`projects`).then((data) => {
+    getproj().then((data) => {
       setProjects(data);
     });
-    handleLogin(`study_groups`).then((data) => {
+    getgrops().then((data) => {
       setGroups(data);
     });
   }, []);

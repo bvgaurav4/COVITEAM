@@ -103,7 +103,32 @@ func main() {
 	app.Get("/healthcheck", func(c *fiber.Ctx) error {
 		return c.SendString("meow  meow nigga")
 	})
-
+	app.Post("/getgrps", func(c *fiber.Ctx) error {
+		var str string = string(c.Body())
+		var lol map[string]interface{}
+		err := json.Unmarshal([]byte(str), &lol)
+		if err != nil {
+			fmt.Println("v have error", err)
+		}
+		fmt.Println("fuck off")
+		var query_string string = "call GetStudyGroupsJoinJoinsUsers(\"" + lol["email"].(string) + "\"" + ");"
+		fmt.Println(query_string)
+		var teststring string = Query_exec(db, query_string)
+		return c.JSON(fiber.Map{"body": teststring})
+	})
+	app.Post("/getproj", func(c *fiber.Ctx) error {
+		var str string = string(c.Body())
+		var lol map[string]interface{}
+		err := json.Unmarshal([]byte(str), &lol)
+		if err != nil {
+			fmt.Println("v have error", err)
+		}
+		fmt.Println("fuck off")
+		var query_string string = "call GetProjectsJoinWorksOnUsers(\"" + lol["email"].(string) + "\"" + ");"
+		fmt.Println(query_string)
+		var teststring string = Query_exec(db, query_string)
+		return c.JSON(fiber.Map{"body": teststring})
+	})
 	app.Post("/home", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())
 		var lol map[string]interface{}
@@ -159,15 +184,16 @@ func main() {
 	})
 	app.Post("/newgroup", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())
+		var lol map[string]interface{}
+
 		fmt.Println(string(c.Body()))
-		grp := group{}
-		err := json.Unmarshal([]byte(str), &grp)
+		err := json.Unmarshal([]byte(str), &lol)
 		if err != nil {
 			return c.Status(500).SendString("Failed to insert data: " + err.Error())
-
 		}
-		var stuff string = formatStruct(grp)
-		err2 := insert("study_group", stuff, db)
+		fmt.Println("call AddStudyGroup(" + "\"" + lol["email"].(string) + "\"" + "," + "\"" + lol["Group_name"].(string) + "\"" + ");")
+		err2 := Query_exec1(db, "call AddStudyGroup("+"\""+lol["email"].(string)+"\""+","+"\""+lol["Group_name"].(string)+"\""+");")
+
 		if err2 != nil {
 			fmt.Println(err)
 			return c.Status(500).SendString("Failed to insert data: " + err2.Error())
@@ -231,16 +257,25 @@ func insert(table string, stuff string, db *sql.DB) error {
 func formatStruct(s interface{}) string {
 	var values []string
 	v := reflect.ValueOf(s)
+	switch v.Kind() {
+	case reflect.Struct:
+		for i := 0; i < v.NumField(); i++ {
+			field := v.Field(i)
 
-	for i := 0; i < v.NumField(); i++ {
-		field := v.Field(i)
-
-		// Check if the field is a string
-		if field.Kind() == reflect.String {
-			values = append(values, "\""+field.String()+"\"")
-		} else {
-			values = append(values, fmt.Sprintf("%v", field.Interface()))
+			// Check if the field is a string
+			if field.Kind() == reflect.String {
+				values = append(values, "\""+field.String()+"\"")
+			} else {
+				values = append(values, fmt.Sprintf("%v", field.Interface()))
+			}
 		}
+	case reflect.Map:
+		for _, key := range v.MapKeys() {
+			value := v.MapIndex(key)
+			values = append(values, fmt.Sprintf("%v: %v", key.Interface(), value.Interface()))
+		}
+	default:
+		return fmt.Sprintf("Unsupported kind: %s", v.Kind())
 	}
 
 	return strings.Join(values, ",")
@@ -253,6 +288,26 @@ func display(db *sql.DB, lol string, condition string) string {
 		fmt.Println("select * from " + lol + " where " + condition + ";")
 		return teststring
 	}
+	teststring = converting(row)
+	return teststring
+}
+func Query_exec(db *sql.DB, lol string) string {
+	row, err := db.Query(lol)
+	if err != nil {
+		fmt.Println("v have got an error", err)
+		return err.Error()
+	}
+	return converting(row)
+}
+func Query_exec1(db *sql.DB, lol string) error {
+	_, err := db.Query(lol)
+	if err != nil {
+		fmt.Println("v have got an error", err)
+		return err
+	}
+	return nil
+}
+func converting(row *sql.Rows) string {
 	columns, _ := row.Columns()
 	var result []map[string]interface{}
 

@@ -42,7 +42,7 @@ CREATE TABLE study_groups (
   group_id varchar(10) NOT NULL PRIMARY KEY,
   email varchar(40) NOT NULL,
   SRN varchar(15) NOT NULL,
-  name varchar(10) NOT NULL,
+  name varchar(255) NOT NULL,
   creation_date timestamp DEFAULT CURRENT_TIMESTAMP,
   photo MEDIUMBLOB,
   FOREIGN KEY (SRN) REFERENCES users(SRN)
