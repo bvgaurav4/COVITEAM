@@ -129,6 +129,18 @@ func main() {
 		var teststring string = Query_exec(db, query_string)
 		return c.JSON(fiber.Map{"body": teststring})
 	})
+	app.Post("getNoti", func(c *fiber.Ctx) error {
+		var str string = string(c.Body())
+		var lol map[string]interface{}
+		err := json.Unmarshal([]byte(str), &lol)
+		if err != nil {
+			fmt.Println("v have error", err)
+		}
+		fmt.Println("fuck off")
+		var query_string string = "call GetActiveJoins(" + "\"" + lol["email"].(string) + "\"" + ");"
+		var teststring string = Query_exec(db, query_string)
+		return c.JSON(fiber.Map{"body": teststring})
+	})
 	app.Post("/home", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())
 		var lol map[string]interface{}
@@ -236,6 +248,24 @@ func main() {
 			}
 			return c.Status(200).SendString("ok")
 		}
+	})
+	app.Post("/update", func(c *fiber.Ctx) error {
+		var str string = string(c.Body())
+		var lol map[string]interface{}
+		err := json.Unmarshal([]byte(str), &lol)
+		if err != nil {
+			fmt.Println("v have error", err)
+			return c.Status(500).SendString("Failed to insert data: ")
+		} else {
+			fmt.Println(str)
+			fmt.Println("update " + lol["table"].(string) + " set " + lol["newvalue"].(string) + " where " + lol["condition"].(string) + ";")
+			_, err := db.Exec("update " + lol["table"].(string) + " set " + lol["newvalue"].(string) + " where " + lol["condition"].(string) + ";")
+			if err != nil {
+				fmt.Println("v have got an error", err)
+				return c.Status(500).SendString("Failed to insert data: ")
+			}
+		}
+		return c.Status(200).SendString("ok")
 	})
 
 	app.Listen(":4000")

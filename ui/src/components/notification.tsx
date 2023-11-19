@@ -1,21 +1,37 @@
 import { Text, Paper ,ActionIcon} from '@mantine/core';
 import { IconCheck, IconX } from '@tabler/icons-react';
-
-
-function Notifi({name,description}) {
-  function yup(){
+import { useState } from 'react';
+const endpoints = 'http://localhost:4000'
+function Notifi({title,name,description}) {
+  async function nope(event: React.FormEvent) {
+    event.preventDefault();
+    const response = await fetch(`${endpoints}/removerow`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "table":"joins" ,"condition":`group_id="${title}" and SRN="${description}"` }),
+    });
+    console.log(response);
+    window.location.reload();
+  }
+  async function yup(event: React.FormEvent){
+    event.preventDefault();
+    const response = await fetch(`${endpoints}/update`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "table":"joins" ,"condition":`group_id="${title}" and SRN="${description}"`, "newvalue":`state="1"` }),
+    });
     console.log("yup");
-    
+    window.location.reload();
   }
-  function nope(){
-    console.log("nope");
-  }
+
   return (
     <Paper shadow="xs" p="md" withBorder>
-      <Text>Paper is the most basic ui component</Text>
       <Text>
-        Use it to create cards, dropdowns, modals and other components that require background
-        with shadow{description}
+        {description} requests to join your group the {name} 
       </Text>
       <div style={{display:'flex', flexDirection:"row", justifyContent:'space-around'}}>
       <ActionIcon color="green" variant="filled" radius='xl' onClick={yup}>

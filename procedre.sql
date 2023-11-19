@@ -1,19 +1,22 @@
 
 
- DELIMITER //
+DELIMITER //
 CREATE PROCEDURE GetStudyGroupsJoinJoinsUsers(IN emailParam VARCHAR(40))
 BEGIN
-  SELECT study_groups.group_id,study_groups.name,study_groups.creation_date,study_groups.photo FROM study_groups 
+  SELECT DISTINCT study_groups.group_id, study_groups.name, study_groups.creation_date, study_groups.photo
+  FROM study_groups 
   JOIN joins ON study_groups.group_id = joins.group_id
   JOIN users ON users.SRN = study_groups.SRN
   WHERE users.email = emailParam AND joins.state = 1;
 END //
 DELIMITER ;
 
+
 DELIMITER //
 CREATE PROCEDURE GetProjectsJoinWorksOnUsers(IN emailParam VARCHAR(40))
 BEGIN
-  SELECT * FROM projects 
+  SELECT DISTINCT projects.*, users.*
+  FROM projects 
   JOIN works_on ON projects.SRN = works_on.SRN
   JOIN users ON users.SRN = works_on.SRN
   WHERE users.email = emailParam;
@@ -28,7 +31,7 @@ BEGIN
   SET groupId = SUBSTRING(UUID(), 1, 10);
   SELECT SRN INTO groupSRN FROM users WHERE email = groupEmail;
   INSERT INTO study_groups (group_id, email, SRN, name) VALUES (groupId, groupEmail, groupSRN, groupName);
-  INSERT INTO joins (group_id, SRN) VALUES (groupId, groupSRN);
+  INSERT INTO joins (group_id, SRN,state) VALUES (groupId, groupSRN,1);
 END //
 DELIMITER ;
 
@@ -49,5 +52,23 @@ BEGIN
   VALUES (p_project_id, p_SRN, p_name, p_description, p_domain_id);
 
   INSERT INTO works_on (project_id, SRN,permission_level) VALUES (p_project_id, p_SRN,"777");
+END //
+DELIMITER ;
+
+-- nested query to request to join a group
+DELIMITER //
+CREATE PROCEDURE GetActiveJoins(IN emailParam VARCHAR(40))
+BEGIN
+  SELECT j.*, u.SRN as ownerSRN, sg.name 
+  FROM joins j, users u, study_groups sg
+  WHERE j.group_id = sg.group_id 
+  AND u.SRN = sg.SRN
+  AND u.email = emailParam
+  AND j.state = 0
+  AND sg.group_id IN (
+    SELECT group_id
+    FROM study_groups
+    WHERE SRN = u.SRN
+  );
 END //
 DELIMITER ;

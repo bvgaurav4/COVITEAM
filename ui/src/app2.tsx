@@ -34,11 +34,14 @@ export default function AppShellDemo() {
   const [showGroups, setShowGroups] = useState(false);
   var [projects, setProjects] = useState(null);
   var [groups, setGroups] = useState(null);
-
+  var [noti, setNoti] = useState(null);
+  // setProjects(null);
+  // setGroups(null);
+  // setNoti(null);
   if (userEmail == null) {
     navigate('/');
   }
-  const getgrops = async (table) => {
+  const getgrops = async () => {
     const response = await fetch(`${endpoints}/getgrps`, {
       method: "POST",
       headers: {
@@ -55,7 +58,23 @@ export default function AppShellDemo() {
     }
    
   }
-  const getproj = async (table) => {
+  const getnoti = async () => {
+    const response = await fetch(`${endpoints}/getnoti`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",  
+      },
+      body: JSON.stringify({"email":  `${userEmail}`}),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data.body;
+    } else {
+      console.log('Request failed');
+      return null;
+    }
+  }
+  const getproj = async () => {
     const response = await fetch(`${endpoints}/getproj`, {
       method: "POST",
       headers: {
@@ -74,10 +93,16 @@ export default function AppShellDemo() {
   }
   useEffect(() => {
     getproj().then((data) => {
+      setProjects(null)
       setProjects(data);
     });
     getgrops().then((data) => {
+      setGroups(null)
       setGroups(data);
+    });
+    getnoti().then((data) => {
+      setNoti(null)
+      setNoti(data);
     });
   }, []);
 
@@ -123,15 +148,17 @@ function handleLogout(){
         </Navbar>
       }
       aside={
-        <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+        <MediaQuery smallerThan="sm" styles={{ display: 'none' }} closeButtonProps={{ 'aria-label': 'Hide notification' }}>
           <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 400 }} >
             <Notification color="violet" title="We notify you that">
         You are now obligated to give a star to Mantine project on GitHub
       </Notification>
       <br></br>
    
-     
-      <Notifi/>
+      {JSON.parse(noti) && JSON.parse(noti).map((prog,index) => (
+            <Notifi  key={prog.group_id} title={prog.group_id} description={prog.SRN} name={prog.name} href={'nones'} badgeText={'none'} />
+          )
+          )}
 
 
           </Aside>
