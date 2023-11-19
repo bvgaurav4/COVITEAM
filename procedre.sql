@@ -31,3 +31,23 @@ BEGIN
   INSERT INTO joins (group_id, SRN) VALUES (groupId, groupSRN);
 END //
 DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE AddProject(IN p_description VARCHAR(100), IN p_domain VARCHAR(10), IN emailParam VARCHAR(40), IN p_name VARCHAR(50))
+BEGIN
+  DECLARE p_SRN VARCHAR(15);
+  DECLARE p_project_id VARCHAR(10);
+  
+  DECLARE p_domain_id VARCHAR(10);
+
+  SELECT domain_id into p_domain_id FROM domain WHERE skills LIKE CONCAT('%', p_domain, '%') LIMIT 1; 
+  SELECT SRN INTO p_SRN FROM users WHERE email = emailParam;
+  SET p_project_id = SUBSTRING(UUID(), 1, 10);
+  
+  INSERT INTO projects (project_id, SRN, project_name, description, domain_id) 
+  VALUES (p_project_id, p_SRN, p_name, p_description, p_domain_id);
+
+  INSERT INTO works_on (project_id, SRN,permission_level) VALUES (p_project_id, p_SRN,"777");
+END //
+DELIMITER ;

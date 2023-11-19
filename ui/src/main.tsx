@@ -6,6 +6,7 @@ import ForgotPassword from './forgot.tsx'
 import Demo from './app2.tsx'
 import './index.css'
 import Group from './components/group.tsx'
+import GameOfLife from './components/gameoflife.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/home" element={<Demo />} />
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/group" element={<Group />} />
+        <Route path="/game" element={<GameOfLife />} />
       </Routes>
     </Router>
     {/* the above coed works just trying someother thing */}

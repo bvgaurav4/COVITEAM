@@ -15,3 +15,12 @@ BEGIN
   INSERT INTO log (table_name, operation) VALUES ('projects', 'INSERT');
 END //
 DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER log_Group_insert
+AFTER INSERT ON study_groups
+FOR EACH ROW
+BEGIN
+  INSERT INTO log (table_name, operation) VALUES ('study_groups', 'INSERT');
+END //
+DELIMITER ;

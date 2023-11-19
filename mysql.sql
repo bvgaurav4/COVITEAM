@@ -30,6 +30,7 @@ CREATE TABLE users (
 CREATE TABLE projects (
   project_id varchar(10) NOT NULL PRIMARY KEY,
   SRN varchar(15) NOT NULL,
+  project_name varchar(50) NOT NULL,
   description varchar(100) NOT NULL,
   creation_date timestamp DEFAULT CURRENT_TIMESTAMP,
   domain_id varchar(10),

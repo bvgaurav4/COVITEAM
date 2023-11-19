@@ -165,22 +165,21 @@ func main() {
 	})
 	app.Post("/newproject", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())
+		var lol map[string]interface{}
 		fmt.Println(string(c.Body()))
-		proj := project{}
-		err := json.Unmarshal([]byte(str), &proj)
+		err := json.Unmarshal([]byte(str), &lol)
 		if err != nil {
 			return c.Status(500).SendString("Failed to insert data: " + err.Error())
-
 		}
-		var stuff string = formatStruct(proj)
-		err2 := insert("project", stuff, db)
+		err2 := Query_exec1(db, "call AddProject("+"\""+lol["des"].(string)+"\""+","+"\""+lol["domain"].(string)+"\""+","+"\""+lol["email"].(string)+"\""+","+"\""+lol["Project_name"].(string)+"\""+");")
+		fmt.Println("call AddProject(" + "\"" + lol["des"].(string) + "\"" + "," + "\"" + lol["domain"].(string) + "\"" + "," + "\"" + lol["email"].(string) + "\"" + "," + "\"" + lol["Project_name"].(string) + "\"" + ");")
 		if err2 != nil {
 			fmt.Println(err)
 			return c.Status(500).SendString("Failed to insert data: " + err2.Error())
 		} else {
 			fmt.Println("All OK")
 		}
-		return c.SendString("Hello, World 👋!")
+		return c.Status(200).SendString("ok")
 	})
 	app.Post("/newgroup", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())
@@ -200,7 +199,7 @@ func main() {
 		} else {
 			fmt.Println("All OK")
 		}
-		return c.SendString("Hello, World 👋!")
+		return c.Status(200).SendString("ok")
 	})
 	app.Post("/login", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())

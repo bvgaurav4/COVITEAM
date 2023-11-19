@@ -1,21 +1,24 @@
-import { Modal, Group, Button,MantineProvider,Container,Title,Paper,TextInput} from '@mantine/core';
+import { Modal, Group, Button,MantineProvider,Container,Title,Paper,TextInput,Select} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
-const endpoints = 'http://localhost:4000/'
+const endpoints = 'http://localhost:4000'
 
 function Createproject() {
   const [Project_name, setGrpname] = useState('');
   const [email, setEmail] = useState('');
+  const [des, setdes] = useState('');
+  const [domain, setDomain] = useState<string | null>(null);
+
 
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    const response = await fetch(`${endpoints}newgroup`, {
+    const response = await fetch(`${endpoints}/newproject`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email,Project_name }),
+      body: JSON.stringify({ email,Project_name,des,domain }),
     });
     console.log(response);
   }
@@ -32,7 +35,19 @@ function Createproject() {
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <TextInput label="Email" placeholder="your@gmail.com" mt="md" required value={email} onChange={(e)=>setEmail(e.currentTarget.value)}  />
-        <TextInput label="Group Name" placeholder="Mentos" required value={Project_name} onChange={(e)=>setGrpname(e.currentTarget.value)} />
+        <TextInput label="project Name" placeholder="like Mentos" required value={Project_name} onChange={(e)=>setGrpname(e.currentTarget.value)} />
+        <TextInput label="description" placeholder="description" required value={des} onChange={(e)=>setdes(e.currentTarget.value)} />
+        <Select
+      label="Domain" required
+      value={domain} onChange={setDomain} 
+      placeholder="Pick one"
+      data={[
+        { value: 'R', label: 'R' },
+        { value: 'ng', label: 'Angular' },
+        { value: 'svelte', label: 'Svelte' },
+        { value: 'vue', label: 'Vue' },
+      ]}
+    />
 
         <Group justify="space-between" mt="lg">
         </Group>

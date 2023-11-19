@@ -1,6 +1,5 @@
 import { useState , useEffect} from 'react';
 import Demo2 from './test.tsx';
-import { IconCheck } from '@tabler/icons-react';
 import {
   AppShell,
   Navbar,
@@ -20,7 +19,7 @@ import Notifi from "./components/notification.tsx"
 import  Createproject from "./components/create_project.tsx"
 import { getUserEmail,logout } from './login.tsx';
 import { Notification } from '@mantine/core';
-
+import './App.css';
 import { useNavigate } from 'react-router-dom';
 
 
