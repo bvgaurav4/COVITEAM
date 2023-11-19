@@ -20,7 +20,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/game" element={<GameOfLife />} />
       </Routes>
     </Router>
-    {/* the above coed works just trying someother thing */}
   </React.StrictMode>
   ,
 )

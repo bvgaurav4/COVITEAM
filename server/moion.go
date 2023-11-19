@@ -148,7 +148,7 @@ func main() {
 		if err != nil {
 			fmt.Println("v have error", err)
 		}
-		var teststring string = display(db, lol["table"].(string), "1")
+		var teststring string = display(db, lol["table"].(string), lol["condition"].(string))
 
 		return c.JSON(fiber.Map{"body": teststring})
 	})

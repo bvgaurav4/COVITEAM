@@ -35,9 +35,6 @@ export default function AppShellDemo() {
   var [projects, setProjects] = useState(null);
   var [groups, setGroups] = useState(null);
   var [noti, setNoti] = useState(null);
-  // setProjects(null);
-  // setGroups(null);
-  // setNoti(null);
   if (userEmail == null) {
     navigate('/');
   }
@@ -97,6 +94,8 @@ export default function AppShellDemo() {
       setProjects(data);
     });
     getgrops().then((data) => {
+      console.log(data)
+
       setGroups(null)
       setGroups(data);
     });
@@ -205,11 +204,11 @@ function handleLogout(){
     >
       <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly" ,flexWrap:"wrap"}}>
       {JSON.parse(projects) && showProjects && JSON.parse(projects).map((prog,index) => (
-            <Demo2  key={prog.project_id} title={prog.project_id} description={prog.description} href={'nones'} badgeText={'none'} />
+            <Demo2  key={prog.project_id} title={prog.project_id} description={prog.description} href={'nones'}  />
           )
           )}
           {JSON.parse(groups) && showGroups && JSON.parse(groups).map((group, index) => (
-            <Demo2 title={group.name} description={'none'} href={'nones'} badgeText={'none'}  />
+            <Demo2 title={group.name} description={'none'} href={'nones'} key={group.group_id} group_id={group.group_id}  />
           ))}
      { (showGroups) &&  <Creategroup/>}
      { (showProjects) &&  <Createproject/>}

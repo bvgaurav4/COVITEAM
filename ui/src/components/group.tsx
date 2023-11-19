@@ -1,5 +1,6 @@
 import { useState , useEffect} from 'react';
 import Demo2 from '../test.tsx';
+import  getGroup  from '../test.tsx';
   import {
   AppShell,
   Navbar,
@@ -12,7 +13,8 @@ import Demo2 from '../test.tsx';
   useMantineTheme,
   Button,
   MantineProvider,
-  TextInput
+  TextInput,
+  ScrollArea
 } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { getUserEmail,logout } from '../login.tsx';
@@ -22,40 +24,49 @@ import { getUserEmail,logout } from '../login.tsx';
 export const endpoints = 'http://localhost:4000'
 
 export default function Group() {
-
-
-    function handleLogout(){
-        logout();
-        navigate('/login');
-      }
-      const navigate = useNavigate();
-
+  
+  const group_id =getGroup();
+  console.log(group_id);
+  const navigate = useNavigate();
   const theme = useMantineTheme();
   const userEmail = getUserEmail();
   const [opened, setOpened] = useState(false);
+  function handleLogout(){
+      logout();
+      navigate('/login');
+  }   
+  console.log(group_id);
+  async function nope(table,group_id) {
+        const response = await fetch(`${endpoints}/home`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ "table":`${table}`,"condition":`group_id="${group_id}"` }),
+        });
+        console.log(response);
+        return response.json();
+      }
+      const [members, setMembers] = useState(null);
+      const [group, setGroup] = useState(null);
 
-  const handleLogin = async (table) => {
-    const response = await fetch(`${endpoints}/home`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",  
-      },
-      body: JSON.stringify({"table":  `${table}`}),
-    });
-    if (response.ok) {
-      const data = await response.json();
-      return data.body;
-    } else {
-      console.log('Request failed');
-      return null;
-    }
-   
-  }
   function oj(){
     console.log('ok')
   }
+  if (userEmail == null) {
+    navigate('/');
+  }
+  useEffect(() => {
+    nope("joins",group_id).then((data) => {
+      console.log(group_id);
+      setMembers(data);
+    });
+    nope("groups",group_id).then((data) => {
+      setGroup(data);
+    });
 
-
+  }, []);
+  console.log(members);
   return (
     <MantineProvider theme={{colorScheme:'dark'}}>
     <AppShell
@@ -67,9 +78,14 @@ export default function Group() {
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       navbar={
-        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }} >
+        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+              <Button variant="outline" color="violet" >Your groups</Button>
+          <ScrollArea h={1000}>
           <Button variant="outline" color="violet" >Your groups</Button>
-        </Navbar>
+          <Button variant="outline" color="violet" >Your groups</Button>
+            </ScrollArea>
+
+    </Navbar>
       }
       aside={
         <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
@@ -122,20 +138,7 @@ export default function Group() {
         <div >
         <Demo2></Demo2>
         <Demo2></Demo2>
-        <Demo2></Demo2>
-        <Demo2></Demo2>
-        <Demo2></Demo2>
-        <Demo2></Demo2>
-        </div>
-        <div>
-        <Demo2></Demo2>
-        <Demo2></Demo2>
-
-        <Demo2></Demo2>
-        <Demo2></Demo2>
-        <Demo2></Demo2>
-
-        <Demo2></Demo2>
+  
         </div>
       </div>          
         <TextInput placeholder='message' style={{width:'100%', position:'fixed', bottom:'100px'}}></TextInput>
