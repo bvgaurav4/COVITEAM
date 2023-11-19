@@ -61,8 +61,8 @@ export default function AuthenticationTitle() {
       </Title>
       <Text c="dimmed" size="sm" ta="center" mt={5}>
         Do not have an account yet?{' '}
-        <Anchor size="sm" component="button">
-          Create account
+        <Anchor size="sm" component="button" >
+        <a href='/signup'>Create account</a>
         </Anchor>
       </Text>
 

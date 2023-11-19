@@ -7,6 +7,7 @@ import Demo from './app2.tsx'
 import './index.css'
 import Group from './components/group.tsx'
 import GameOfLife from './components/gameoflife.tsx'
+import Creating from './components/creating_user.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/group" element={<Group />} />
         <Route path="/game" element={<GameOfLife />} />
+        <Route path="/signup" element={<Creating/>} />
       </Routes>
     </Router>
   </React.StrictMode>

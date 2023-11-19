@@ -153,3 +153,5 @@ INSERT INTO user_domain_interest (SRN, domain_id) VALUES
 ('SRN001', 'DM001'),
 ('SRN002', 'DM002'),
 ('SRN003', 'DM003');
+INSERT INTO users (SRN, Name, email, password, phone_number, dept_id) 
+VALUES ('SRN004', 'Alice Johnson', 'alicejohnson@example.com', 'password', '0987654321', 'D001');
