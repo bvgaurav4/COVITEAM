@@ -24,3 +24,11 @@ BEGIN
   INSERT INTO log (table_name, operation) VALUES ('study_groups', 'INSERT');
 END //
 DELIMITER ;
+DELIMITER //
+CREATE TRIGGER log_users_insert
+AFTER INSERT ON users
+FOR EACH ROW
+BEGIN
+  INSERT INTO log (table_name, operation) VALUES ('users', 'INSERT');
+END //
+DELIMITER ;

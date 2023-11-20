@@ -2,9 +2,11 @@ import { Modal, Group, Button,MantineProvider,Container,Title,Paper,TextInput,Se
 
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 const endpoints = 'http://localhost:4000'
 
 function Createproject() {
+  const navigate = useNavigate();
   const [Project_name, setGrpname] = useState('');
   const [email, setEmail] = useState('');
   const [des, setdes] = useState('');
@@ -22,6 +24,10 @@ function Createproject() {
       body: JSON.stringify({ email,Project_name,des,domain }),
     });
     console.log(response);
+    navigate('/home');
+    window.location.reload();
+
+    
   }
     const [opened, { open, close }] = useDisclosure(false);
     return (

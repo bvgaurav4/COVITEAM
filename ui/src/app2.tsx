@@ -149,9 +149,8 @@ function handleLogout(){
       aside={
         <MediaQuery smallerThan="sm" styles={{ display: 'none' }} closeButtonProps={{ 'aria-label': 'Hide notification' }}>
           <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 400 }} >
-            <Notification color="violet" title="We notify you that">
-        You are now obligated to give a star to Mantine project on GitHub
-      </Notification>
+            <Notification color="violet" title="Welcome to Coviteam: Collaborative Team Network">
+You can now create your projects , Study groups in order to collaborate with others      </Notification>
       <br></br>
    
       {JSON.parse(noti) && JSON.parse(noti).map((prog,index) => (
@@ -204,7 +203,7 @@ function handleLogout(){
     >
       <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly" ,flexWrap:"wrap"}}>
       {JSON.parse(projects) && showProjects && JSON.parse(projects).map((prog,index) => (
-            <Demo2  key={prog.project_id} title={prog.project_id} description={prog.description} href={'nones'}  />
+            <Demo2  key={prog.project_id} title={prog.project_name} description={prog.description} href={'nones'}  />
           )
           )}
           {JSON.parse(groups) && showGroups && JSON.parse(groups).map((group, index) => (

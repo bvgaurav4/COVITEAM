@@ -6,20 +6,41 @@ import {
     Button,
     Container,
     Group,
-    Anchor,
     Center,
     Box,
     rem,
-    MantineProvider
+    MantineProvider,
+    PasswordInput
   } from '@mantine/core';
   import { IconArrowLeft } from '@tabler/icons-react';
   import { Link } from 'react-router-dom';
-
+  import { useState } from 'react';
+  import { useNavigate } from 'react-router-dom';
   import './forgot.css';
-
+  const endpoints = 'http://localhost:4000'
 
   export default  function ForgotPassword() {
+    const navigate = useNavigate();
+    const [password, setPassword] = useState('');
+    const [title, setTitle] = useState('');
+    async function yup(event: React.FormEvent){
+      event.preventDefault();
+      const response = await fetch(`${endpoints}/update`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ "table":"users" ,"condition":`email="${title}"`, "newvalue":`password="${password}"` }),
+      });
+    
+      console.log("yup");
+      if (response.ok){
+        console.log('login successful');
+        navigate('/login');
+      }
+    }
     return (
+
         <MantineProvider theme={{colorScheme:'dark'}}>
 
       <Container size={500} my={40} >
@@ -31,15 +52,14 @@ import {
         </Text>
   
         <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
-          <TextInput label="Your email" placeholder="me@mantine.dev" required />
+          <TextInput label="Your email" placeholder="me@mantine.dev" required value={title}  onChange={(e)=>setTitle(e.currentTarget.value)}/>
+          <PasswordInput label="Password" placeholder="Your password" required mt="md" value={password}  onChange={(e)=>setPassword(e.currentTarget.value)}/>
           <Group justify="space-between" mt="lg" className='controls'>
-            <Anchor c="dimmed" size="sm" className='classes.control'>
               <Center inline>
               <Link to='/login' >  <IconArrowLeft style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
                 <Box ml={5}>Back to the login page</Box></Link>
               </Center>
-            </Anchor>
-            <Button className='control' >Reset password</Button>
+            <Button className='control'  onClick={yup}>Reset password</Button>
           </Group>
         </Paper>
       </Container></MantineProvider>

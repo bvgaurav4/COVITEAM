@@ -110,7 +110,6 @@ func main() {
 		if err != nil {
 			fmt.Println("v have error", err)
 		}
-		fmt.Println("fuck off")
 		var query_string string = "call GetStudyGroupsJoinJoinsUsers(\"" + lol["email"].(string) + "\"" + ");"
 		fmt.Println(query_string)
 		var teststring string = Query_exec(db, query_string)
@@ -123,7 +122,6 @@ func main() {
 		if err != nil {
 			fmt.Println("v have error", err)
 		}
-		fmt.Println("fuck off")
 		var query_string string = "call GetProjectsJoinWorksOnUsers(\"" + lol["email"].(string) + "\"" + ");"
 		fmt.Println(query_string)
 		var teststring string = Query_exec(db, query_string)
@@ -136,7 +134,6 @@ func main() {
 		if err != nil {
 			fmt.Println("v have error", err)
 		}
-		fmt.Println("fuck off")
 		var query_string string = "call GetActiveJoins(" + "\"" + lol["email"].(string) + "\"" + ");"
 		var teststring string = Query_exec(db, query_string)
 		return c.JSON(fiber.Map{"body": teststring})
@@ -154,26 +151,27 @@ func main() {
 	})
 
 	app.Post("/newuser", func(c *fiber.Ctx) error {
-		users := user{}
 		var str string = string(c.Body())
+		var lol map[string]interface{}
 		userAgent := c.Get("User-Agent")
 		fmt.Println("User-Agent:", userAgent)
 		fmt.Println(string(c.Body()))
-		err := json.Unmarshal([]byte(str), &users)
+		err := json.Unmarshal([]byte(str), &lol)
 
 		if err != nil {
 			fmt.Println(err)
 			return c.Status(500).SendString("Failed to insert data: " + err.Error())
 
 		}
-		var stuff string = formatStruct(users)
-
-		err2 := insert("users", stuff, db)
+		var stuff string = formatStruct(lol)
+		fmt.Println(stuff)
+		var quer string = "INSERT INTO users (SRN, Name, email, password,phone_number, dept_id) VALUES (" + "\"" + lol["SRN"].(string) + "\"" + "," + "\"" + lol["name"].(string) + "\"" + "," + "\"" + lol["email"].(string) + "\"" + "," + "\"" + lol["password"].(string) + "\"" + "," + "\"" + lol["phone"].(string) + "\"" + "," + "\"" + lol["department_id"].(string) + "\"" + ");"
+		fmt.Println(quer)
+		err2 := Query_exec1(db, quer)
 		if err2 != nil {
 			return c.Status(500).SendString("Failed to insert data: " + err2.Error())
-
 		}
-		return c.JSON(users)
+		return c.Status(200).SendString("ok")
 	})
 	app.Post("/newproject", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())
@@ -223,7 +221,8 @@ func main() {
 		} else {
 			fmt.Println(str)
 			var teststring string = display(db, "users", "email=\""+lol["email"].(string)+"\" and password=\""+lol["password"].(string)+"\"")
-			if teststring != "" {
+			fmt.Println(teststring)
+			if teststring != "null" {
 				return c.Status(200).SendString("ok")
 			} else {
 				return c.Status(500).SendString("Failed to insert data: ")
@@ -306,11 +305,11 @@ func formatStruct(s interface{}) string {
 	default:
 		return fmt.Sprintf("Unsupported kind: %s", v.Kind())
 	}
-
 	return strings.Join(values, ",")
 }
 func display(db *sql.DB, lol string, condition string) string {
 	var teststring string
+	fmt.Println("select * from " + lol + " where " + condition + ";")
 	row, err := db.Query("select * from " + lol + " where " + condition + ";")
 	if err != nil {
 		fmt.Println("v have got an error", err)
