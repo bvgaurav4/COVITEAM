@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 
 const SIZE = 100;
 
-// Initialize game state
 function createEmptyGrid() {
   let grid = [];
   for (let i = 0; i < SIZE; i++) {
@@ -40,7 +39,7 @@ export default function GameOfLife() {
           })
         );
       });
-    }, 100);
+    }, 10);
 
     return () => clearInterval(interval);
   }, []);
@@ -83,9 +82,9 @@ export default function GameOfLife() {
               height: `calc(100vh / ${SIZE})`,
               backgroundColor: grid[i][j] ? 'white' : undefined,
             }}
-          />
+          ></div>
         ))
       )}
-    </div>
+</div>
   );
 }

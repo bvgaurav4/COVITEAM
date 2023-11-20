@@ -12,81 +12,10 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
-
-type user struct {
-	SRN          string `json:"SRN"`
-	Name         string `json:"Name"`
-	Email        string `json:"email"`
-	Phone_number string `json:"phone_number"`
-	Dept         string `json:"dept"`
-	Semester     string `json:"semester"`
-	Rating       string `json:"rating"`
-	Availability string `json:"availability"`
-}
-type project struct {
-	Project_id            string `json:"project_id"`
-	Project_name          string `json:"project_name"`
-	Project_desc          string `json:"project_desc"`
-	Project_tags          string `json:"project_tags"`
-	Project_creation_date string `json:"project_creation_date"`
-	Project_photo         string `json:"project_photo"`
-}
-type group struct {
-	Group_id            string `json:"group_id"`
-	Group_name          string `json:"group_name"`
-	Group_creation_date string `json:"group_creation_date"`
-	Group_photo         string `json:"group_photo"`
-}
-type group_members struct {
-	Group_id string `json:"group_id"`
-	SRN      string `json:"SRN"`
-	State    string `json:"state"`
-}
-type project_members struct {
-	Project_id string `json:"project_id"`
-	SRN        string `json:"SRN"`
-	Role       string `json:"role"`
-	Permission string `json:"permission"`
-}
-type resources struct {
-	Resource_id    string `json:"resource_id"`
-	Resources_name string `json:"resources_name"`
-	Resources_desc string `json:"resources_desc"`
-	Resources_tags string `json:"resources_tags"`
-}
-type project_resources struct {
-	Project_id  string `json:"project_id"`
-	Resource_id string `json:"resource_id"`
-}
-type domain struct {
-	Domain_id   string `json:"domain_id"`
-	Domain_name string `json:"domain_name"`
-	Domain_desc string `json:"domain_desc"`
-	Domain_tags string `json:"domain_tags"`
-}
-type department struct {
-	Dept_id   string `json:"dept_id"`
-	Dept_name string `json:"dept_name"`
-	Dept_desc string `json:"dept_desc"`
-	Dept_tags string `json:"dept_tags"`
-}
-type creates_project struct {
-	SRN        string `json:"SRN"`
-	Project_id string `json:"project_id"`
-}
-type creates_group struct {
-	SRN      string `json:"SRN"`
-	Group_id string `json:"group_id"`
-}
-type user_domain_interests struct {
-	SRN       string `json:"SRN"`
-	Domain_id string `json:"domain_id"`
-}
-
 func main() {
 	fmt.Println("Hello World")
 
-	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/coviteam4")
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/coviteam1")
 
 	if err != nil {
 		fmt.Println("v have and error", err.Error())
@@ -96,7 +25,7 @@ func main() {
 	defer db.Close()
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:5173",
+		AllowOrigins: "http://127.0.0.1:5173",
 
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
@@ -268,19 +197,6 @@ func main() {
 	})
 
 	app.Listen(":4000")
-}
-func insert(table string, stuff string, db *sql.DB) error {
-
-	fmt.Println("insert into " + table + " values(" + stuff + ");")
-	var str string = "insert into " + table + " values(" + stuff + ")"
-	if db == nil {
-		fmt.Println("db is nil")
-	}
-	_, err := db.Exec(str)
-	if err != nil {
-		fmt.Println("v have got an error", err)
-	}
-	return err
 }
 func formatStruct(s interface{}) string {
 	var values []string

@@ -72,3 +72,5 @@ BEGIN
   );
 END //
 DELIMITER ;
+
+GRANT All PRIVILEGES ON database_name.table_name TO 'username'@'host';

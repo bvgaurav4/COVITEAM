@@ -1,9 +1,13 @@
 import { Modal, Group, Button,MantineProvider,Container,Title,Paper,TextInput} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 const endpoints = 'http://localhost:4000'
 
 function CreateGroup() {
+    const navigate = useNavigate();
+  
   const [Group_name, setGrpname] = useState('');
   const [email, setEmail] = useState('');
 
@@ -20,6 +24,8 @@ function CreateGroup() {
     });
     console.log(response);
     if (response.ok) {
+          navigate('/home');
+    window.location.reload();
       
     } else {
       console.log('Request failed');
