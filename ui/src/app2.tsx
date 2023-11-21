@@ -14,7 +14,6 @@ import {
   useMantineTheme,
   Button,
   MantineProvider,
-  TextInput
 } from '@mantine/core';
 import  Creategroup from "./components/create_group.tsx"
 import Notifi from "./components/notification.tsx"
@@ -24,7 +23,7 @@ import { Notification } from '@mantine/core';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
 import {endpoint} from './components/config';
-
+import SearchComponent from './components/search_component.tsx';
 
 export const endpoints = endpoint
 
@@ -74,6 +73,14 @@ export default function AppShellDemo() {
       return null;
     }
   }
+  const handlelogoClick = () => {
+    // Do something when the div is clicked
+
+    console.log('Div clicked!');
+    navigate('/home')
+    window.location.reload();
+    // Add your logic here
+  };
   const getproj = async () => {
     const response = await fetch(`${endpoints}/getproj`, {
       method: "POST",
@@ -191,10 +198,12 @@ You can now create your projects , Study groups in order to collaborate with oth
                 mr="xl"
               />
             </MediaQuery>
-            <div>
+            <div className='logoplus' onClick={handlelogoClick}>
             <img src='/vite.svg' className='logo' onClick={oj}></img>
-            <Text fw={500} size="xl" color='violet'>COVITEAM</Text></div>
-            <TextInput radius="xl" placeholder="search " />
+              <Text fw={500} size="xl" color='violet'>COVITEAM</Text>
+            </div>
+            {/* <TextInput radius="xl" placeholder="search " /> */}
+            <SearchComponent></SearchComponent>
           </div>
         </Header>
       }
