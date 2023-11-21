@@ -1,11 +1,10 @@
 import { Text, Paper ,ActionIcon} from '@mantine/core';
 import { IconCheck, IconX } from '@tabler/icons-react';
-import { useState } from 'react';
 const endpoints = 'http://localhost:4000'
-function Notifi({title,name,description}) {
+function Notifi({title="test",name="test",description="test"}) {
   async function nope(event: React.FormEvent) {
     event.preventDefault();
-    const response = await fetch(`${endpoints}/removerow`, {
+    await fetch(`${endpoints}/removerow`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -16,7 +15,7 @@ function Notifi({title,name,description}) {
   }
   async function yup(event: React.FormEvent){
     event.preventDefault();
-    const response = await fetch(`${endpoints}/update`, {
+    await fetch(`${endpoints}/update`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

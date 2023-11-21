@@ -46,22 +46,26 @@ function Demo2({title = "Default Title", description = "Default Description", hr
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder style={{width:"250px",height:"260px "}}>
 
-      <Group position="apart" mb="sm">
-         <Burger opened={opened1} onClick={open} aria-label={label} />
-      </Group>
+
       <Card.Section component="a" href={href}>
+
       </Card.Section>
 
       <Group position="apart" mt="md" mb="xs">
         <Text weight={500}>{title}</Text>
-        <Badge color="green" variant="light">
+        <Group position="apart" mb="sm">
+         <Burger opened={opened1} onClick={open} aria-label={label} size="sm"/>
+      </Group>
+
+      </Group>
+
+      <Badge color="green" variant="light">
           {badgeText}
         </Badge>
-      </Group>
       <Text size="sm" color="dimmed">
-        {title}</Text>
+        {group_id}</Text>
       <Text size="sm" color="dimmed">
-        {description} {group_id}
+        {description}
       </Text>
       <Modal opened={opened1} onClose={close} withCloseButton={false} centered transitionProps={{ transition: 'rotate-left' }} >
         <Text size="xl" >Edit Info</Text>

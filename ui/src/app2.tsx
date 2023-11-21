@@ -1,5 +1,7 @@
 import { useState , useEffect} from 'react';
 import Demo2 from './test.tsx';
+import { Avatar } from '@mantine/core';
+
 import {
   AppShell,
   Navbar,
@@ -117,6 +119,7 @@ function handleLogout(){
 
 
   function oj(){
+    navigate('/home');
     console.log('ok')
   }
 
@@ -143,9 +146,9 @@ function handleLogout(){
         </Navbar>
       }
       aside={
-        <MediaQuery smallerThan="sm" styles={{ display: 'none' }} closeButtonProps={{ 'aria-label': 'Hide notification' }}>
+        <MediaQuery smallerThan="sm" styles={{ display: 'none' }} >
           <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 400 }} >
-            <Notification color="violet" title="Welcome to Coviteam: Collaborative Team Network">
+            <Notification color="violet" title="Welcome to Coviteam: Collaborative Team Network" onClose={close}>
 You can now create your projects , Study groups in order to collaborate with others      </Notification>
       <br></br>
    
@@ -164,7 +167,8 @@ You can now create your projects , Study groups in order to collaborate with oth
             <div style={{display: 'flex', alignItems: 'center', height: '100%' ,justifyContent:'space-between'}}>
           <div><Button variant="transparent" color="violet" onClick={handleLogout }>logout/change account</Button>
             </div>
-            <img src='/vite.svg' className='logo'></img>
+            <Avatar radius="xl" className='logo'/>
+
           <Text color='white'>{userEmail}</Text>
           </div>
             <div style={{display: 'flex', height: '100%' ,justifyContent:'space-between'}}>
@@ -187,7 +191,7 @@ You can now create your projects , Study groups in order to collaborate with oth
               />
             </MediaQuery>
             <div>
-            <img src='/vite.svg' className='logo'></img>
+            <img src='/vite.svg' className='logo' onClick={oj}></img>
             <Text fw={500} size="xl" color='violet'>COVITEAM</Text></div>
             <TextInput radius="xl" placeholder="search " />
           </div>
