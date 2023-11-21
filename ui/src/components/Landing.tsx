@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import React, { useState } from 'react';
 import { Box } from '@mantine/core';
-import endpoint from './endpoint';
+import { endpoint } from './config';
 
 export const endpoints = endpoint
 

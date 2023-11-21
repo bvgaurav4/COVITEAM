@@ -1,6 +1,6 @@
 import { Text, Paper ,ActionIcon} from '@mantine/core';
 import { IconCheck, IconX } from '@tabler/icons-react';
-import endpoint from './endpoint';
+import { endpoint } from './config';
 
 const endpoints = endpoint
 function Notifi({title="test",name="test",description="test"}) {

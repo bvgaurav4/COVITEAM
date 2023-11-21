@@ -17,7 +17,7 @@ import {
   import { useState } from 'react';
   import { useNavigate } from 'react-router-dom';
 import './forgot.css';
-import endpoint from './components/endpoint';
+import {endpoint} from './components/config';
 
   const endpoints = endpoint
 

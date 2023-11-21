@@ -2,7 +2,7 @@ import { Modal, Group, Button,MantineProvider,Container,Title,Paper,TextInput} f
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import endpoint from './endpoint';
+import { endpoint } from './config';
 
 const endpoints = endpoint
 

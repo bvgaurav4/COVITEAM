@@ -2,7 +2,7 @@ import { Card, Image, Text, Badge, Button, Group,Modal, TextInput } from '@manti
 import { Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
-import endpoint from './components/endpoint';
+import {endpoint} from './components/config';
 
 
 import { useNavigate } from 'react-router-dom';

@@ -4,7 +4,7 @@ import { Stepper, Button, Group,Paper,  MantineProvider,TextInput,PasswordInput
 import { useNavigate } from 'react-router-dom';
 import { MultiSelect } from '@mantine/core';
 import { Alert } from '@mantine/core';
-import endpoint from './endpoint';
+import { endpoint } from './config';
 
 function Creating() {
     const [error, setError] = useState(null);

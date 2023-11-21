@@ -19,7 +19,7 @@ import  getGroup  from '../test.tsx';
 import { useNavigate } from 'react-router-dom';
 import { getUserEmail,logout } from '../login.tsx';
 
-import endpoint from './endpoint';
+import { endpoint } from './config';
 
 
 export const endpoints = endpoint

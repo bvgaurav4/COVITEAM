@@ -11,7 +11,7 @@ import {
   Button,
   MantineProvider,
 } from '@mantine/core';
-import endpoint from './components/endpoint';
+import {endpoint} from './components/config';
 import './login.css';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';

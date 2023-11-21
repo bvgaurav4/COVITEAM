@@ -23,7 +23,7 @@ import { getUserEmail,logout } from './login.tsx';
 import { Notification } from '@mantine/core';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
-import endpoint from './components/endpoint.js';
+import {endpoint} from './components/config';
 
 
 export const endpoints = endpoint
