@@ -4,11 +4,12 @@ import { Stepper, Button, Group,Paper,  MantineProvider,TextInput,PasswordInput
 import { useNavigate } from 'react-router-dom';
 import { MultiSelect } from '@mantine/core';
 import { Alert } from '@mantine/core';
+import endpoint from './endpoint';
 
 function Creating() {
     const [error, setError] = useState(null);
 
-    const endpoints = 'http://localhost:4000'
+    const endpoints = endpoint
     const navigate = useNavigate();
     const [active, setActive] = useState(0);
     const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));

@@ -11,11 +11,12 @@ import {
   Button,
   MantineProvider,
 } from '@mantine/core';
+import endpoint from './components/endpoint';
 import './login.css';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import { useState } from 'react';
-const endpoints = 'http://localhost:4000'
+const endpoints = endpoint
 const userEmail = localStorage.getItem('user');
 export function getUserEmail() {
   return localStorage.getItem('user');

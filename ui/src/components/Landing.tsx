@@ -1,7 +1,9 @@
 import ReactDOM from 'react-dom/client';
 import React, { useState } from 'react';
 import { Box } from '@mantine/core';
-export const endpoints = 'http://localhost:4000/'
+import endpoint from './endpoint';
+
+export const endpoints = endpoint
 
 function LoginPage() {
   const [username, setUsername] = useState('');

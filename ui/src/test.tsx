@@ -2,10 +2,11 @@ import { Card, Image, Text, Badge, Button, Group,Modal, TextInput } from '@manti
 import { Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
+import endpoint from './components/endpoint';
 
 
 import { useNavigate } from 'react-router-dom';
-const endpoints = 'http://localhost:4000'
+const endpoints = endpoint
 export function getGroup() {
   const groupId = localStorage.getItem('group_id');
   return groupId;

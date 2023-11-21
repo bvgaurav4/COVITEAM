@@ -23,9 +23,10 @@ import { getUserEmail,logout } from './login.tsx';
 import { Notification } from '@mantine/core';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
+import endpoint from './components/endpoint.js';
 
 
-export const endpoints = 'http://localhost:4000'
+export const endpoints = endpoint
 
 export default function AppShellDemo() {
   const navigate = useNavigate();

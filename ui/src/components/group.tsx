@@ -19,10 +19,10 @@ import  getGroup  from '../test.tsx';
 import { useNavigate } from 'react-router-dom';
 import { getUserEmail,logout } from '../login.tsx';
 
+import endpoint from './endpoint';
 
 
-export const endpoints = 'http://localhost:4000'
-
+export const endpoints = endpoint
 export default function Group() {
   
   const group_id =getGroup();

@@ -1,6 +1,8 @@
 import { Text, Paper ,ActionIcon} from '@mantine/core';
 import { IconCheck, IconX } from '@tabler/icons-react';
-const endpoints = 'http://localhost:4000'
+import endpoint from './endpoint';
+
+const endpoints = endpoint
 function Notifi({title="test",name="test",description="test"}) {
   async function nope(event: React.FormEvent) {
     event.preventDefault();

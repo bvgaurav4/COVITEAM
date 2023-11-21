@@ -9,7 +9,8 @@ import CreateProject from './components/create_project'
 import {Box} from '@mantine/core'
 import { SearchIcon } from '@primer/octicons-react'
 import Lol from './test.tsx'
-export const endpoints = 'https:localhost:4000/'
+import endpoint from './components/endpoint.js';
+export const endpoints = endpoint
 const fetcher = (url: string) => fetch(`${endpoints}/${url}`).then((res) => res.json())
 
 function App() {

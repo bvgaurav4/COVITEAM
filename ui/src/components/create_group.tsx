@@ -2,8 +2,9 @@ import { Modal, Group, Button,MantineProvider,Container,Title,Paper,TextInput} f
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import endpoint from './endpoint';
 
-const endpoints = 'http://localhost:4000'
+const endpoints = endpoint
 
 function CreateGroup() {
     const navigate = useNavigate();

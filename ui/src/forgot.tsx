@@ -16,8 +16,10 @@ import {
   import { Link } from 'react-router-dom';
   import { useState } from 'react';
   import { useNavigate } from 'react-router-dom';
-  import './forgot.css';
-  const endpoints = 'http://localhost:4000'
+import './forgot.css';
+import endpoint from './components/endpoint';
+
+  const endpoints = endpoint
 
   export default  function ForgotPassword() {
     const navigate = useNavigate();

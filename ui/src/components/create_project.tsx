@@ -3,7 +3,9 @@ import { Modal, Group, Button,MantineProvider,Container,Title,Paper,TextInput,Se
 import { useDisclosure } from '@mantine/hooks';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-const endpoints = 'http://localhost:4000'
+import endpoint from './endpoint';
+
+const endpoints = endpoint
 
 function Createproject() {
   const navigate = useNavigate();
