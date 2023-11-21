@@ -18,6 +18,7 @@ import React from 'react';
 import { useState } from 'react';
 const endpoints = endpoint
 const userEmail = localStorage.getItem('user');
+
 export function getUserEmail() {
   return localStorage.getItem('user');
 }

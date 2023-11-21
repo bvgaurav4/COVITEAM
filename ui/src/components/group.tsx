@@ -1,6 +1,7 @@
-import { useState , useEffect} from 'react';
+import { useState , useEffect,useRef} from 'react';
 import Demo2 from '../test.tsx';
 import  getGroup  from '../test.tsx';
+import Message from './message.tsx';
   import {
   AppShell,
   Navbar,
@@ -25,48 +26,76 @@ import { endpoint } from './config';
 export const endpoints = endpoint
 export default function Group() {
   
-  const group_id =getGroup();
-  console.log(group_id);
+  const group_id = localStorage.getItem('group_id');
   const navigate = useNavigate();
   const theme = useMantineTheme();
+  const [sending_message, setPassword] = useState('');
+  const [members, setMembers] = useState(null);
+  const [messages, setMessages] = useState(null);
   const userEmail = getUserEmail();
   const [opened, setOpened] = useState(false);
+  const viewport = useRef<HTMLDivElement>(null);
+
   function handleLogout(){
       logout();
       navigate('/login');
   }   
-  console.log(group_id);
   async function nope(table,group_id) {
         const response = await fetch(`${endpoints}/home`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ "table":`${table}`,"condition":`group_id="${group_id}"` }),
+          body: JSON.stringify({ "table":`${table}`,"condition":`group_id="${group_id}" and state=1` }),
         });
         console.log(response);
         return response.json();
       }
-      const [members, setMembers] = useState(null);
-      const [group, setGroup] = useState(null);
-
+      async function nope2(table,group_id) {
+        const response = await fetch(`${endpoints}/home`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ "table":`${table}`,"condition":`group_id="${group_id}"  order by timestamp` }),
+        });
+        console.log(response);
+        return response.json();
+      }
+      const scrollToBottom = () =>
+      viewport.current.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
+      async function nope3() {
+        const response = await fetch(`${endpoints}/custom_nonreturn_query`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ "query":`call messaging("${group_id}","${userEmail}","${sending_message}")` }),
+        });
+        console.log(response);
+        return response.json();
+      }
   function oj(){
     console.log('ok')
+    console.log(sending_message)
+    nope3().then((data) => {
+      console.log(data.body)
+      setMessages(data.body);
+    });
+          window.location.reload();
+
   }
   if (userEmail == null) {
     navigate('/');
   }
   useEffect(() => {
-    nope("joins",group_id).then((data) => {
-      console.log(group_id);
-      setMembers(data);
+    nope('joins',group_id).then((data) => {
+      setMembers(data.body);
     });
-    nope("groups",group_id).then((data) => {
-      setGroup(data);
+    nope2('messages',group_id).then((data) => {
+      setMessages(data.body);
     });
-
   }, []);
-  console.log(members);
   return (
     <MantineProvider theme={{colorScheme:'dark'}}>
     <AppShell
@@ -79,23 +108,15 @@ export default function Group() {
       asideOffsetBreakpoint="sm"
       navbar={
         <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-              <Button variant="outline" color="violet" >Your groups</Button>
+              <Button variant="outline" color="violet" >{group_id}</Button>
           <ScrollArea h={1000}>
-          <Button variant="outline" color="violet" >Your groups</Button>
-          <Button variant="outline" color="violet" >Your groups</Button>
+          {JSON.parse(members)  && JSON.parse(members).map((prog,index) => (
+            <Demo2  key={prog.group_id} title={prog.SRN}  href={'nones'} group_id={prog.group_id} namess='SRN' />
+          )
+          )}
             </ScrollArea>
 
     </Navbar>
-      }
-      aside={
-        <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
-          <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 400 }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Button variant="outline" color="violet" >Your groups</Button>
-              <Button variant="outline" color="violet" >Your projects</Button>
-            </div>
-          </Aside>
-        </MediaQuery>
       }
       footer={
         <Footer height={100} p="md">
@@ -134,15 +155,21 @@ export default function Group() {
         main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] , display:"flex", flexDirection:"column", justifyContent:"space-between" ,flexWrap:"wrap"},
       })}
     >
-      <div style={{display:"flex", flexDirection:"row", justifyContent:"space-between" ,flexWrap:"wrap", padding:''}}>
+          <ScrollArea h={600} viewportRef={viewport}>
+          {JSON.parse(messages) && JSON.parse(messages).map((group, index) => (
         <div >
-        <Demo2></Demo2>
-        <Demo2></Demo2>
-  
-        </div>
-      </div>          
-        <TextInput placeholder='message' style={{width:'100%', position:'fixed', bottom:'100px'}}></TextInput>
-        <Button style={{right:'400px', bottom:'100px' ,position:'fixed'}}></Button>
+        <Message description={group.message}  table="groups" ids="group_id" namess={group.sender} />  
+      </div>          ))}
+    </ScrollArea>
+
+
+      <div style={{display:"flex", position:"fixed",right:"2em", bottom:"6.5em"}}>
+        <TextInput placeholder='message' style={{width:'70em'}} value={sending_message} onChange={(e)=>setPassword(e.currentTarget.value)}></TextInput>
+        <Button onClick={oj}>send</Button>
+        <Button onClick={scrollToBottom} variant="outline">
+          Scroll to bottom
+        </Button>
+        </div>        
     </AppShell>
     </MantineProvider>
   );

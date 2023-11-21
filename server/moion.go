@@ -26,7 +26,7 @@ func main() {
 	defer db.Close()
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://127.0.0.1:5173",
+		AllowOrigins: "http://localhost:5173",
 
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
@@ -153,12 +153,29 @@ func main() {
 			var teststring string = display(db, "users", "email=\""+lol["email"].(string)+"\" and password=\""+lol["password"].(string)+"\"")
 			fmt.Println(teststring)
 			if teststring != "null" {
-				return c.Status(200).SendString("ok")
+				return c.Status(200).SendString(teststring)
 			} else {
 				return c.Status(500).SendString("Failed to insert data: ")
 			}
 		}
 
+	})
+	app.Post("/custom_nonreturn_query", func(c *fiber.Ctx) error {
+		var str string = string(c.Body())
+		var lol map[string]interface{}
+		err := json.Unmarshal([]byte(str), &lol)
+		if err != nil {
+			fmt.Println("v have error", err)
+			return c.Status(500).SendString("Failed to insert data: ")
+		} else {
+			fmt.Println(str)
+			err := Query_exec1(db, lol["query"].(string))
+			if err != nil {
+				fmt.Println("v have got an error", err)
+				return c.Status(500).SendString("Failed to insert data: ")
+			}
+		}
+		return c.Status(200).SendString("ok")
 	})
 	app.Post("/removerow", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())

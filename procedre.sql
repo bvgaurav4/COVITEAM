@@ -74,3 +74,11 @@ END //
 DELIMITER ;
 
 GRANT All PRIVILEGES ON database_name.table_name TO 'username'@'host';
+
+DELIMITER //
+CREATE PROCEDURE messaging(IN group_id VARCHAR(10), in emailParam VARCHAR(40), in message VARCHAR(100))
+BEGIN
+    DECLARE sender VARCHAR(15);
+    select SRN into sender from users where email = emailParam;
+    INSERT INTO messages (sender, group_id, message) VALUES (sender, group_id, message);
+END //

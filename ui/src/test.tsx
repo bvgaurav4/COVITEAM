@@ -7,9 +7,9 @@ import {endpoint} from './components/config';
 
 import { useNavigate } from 'react-router-dom';
 const endpoints = endpoint
-export function getGroup() {
-  const groupId = localStorage.getItem('group_id');
-  return groupId;
+export function getGroups() {
+  console.log("whhat is this",localStorage.getItem('group_id'));
+  return localStorage.getItem('group_id');
 }
 function Demo2({title = "Default Title", description = "Default Description", href = "#", badgeText = "Live", group_id="lol",table="projects",ids="project_id",namess="name"} = {}) {
   const navigate = useNavigate();
@@ -19,12 +19,14 @@ function Demo2({title = "Default Title", description = "Default Description", hr
   const [groupId, setGroupId] = useState(title);
   const [des, setdes] = useState(description);
   function  lolredirect(){
+    console.log(group_id);
+    localStorage.setItem('group_id', group_id); 
     navigate('/group');
   }
 
   async function nope(event: React.FormEvent) {
     event.preventDefault();
-    const response = await fetch(`${endpoints}/removerow`, {
+    await fetch(`${endpoints}/removerow`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +37,7 @@ function Demo2({title = "Default Title", description = "Default Description", hr
   }
   async function yup(event: React.FormEvent){
     event.preventDefault();
-    const response = await fetch(`${endpoints}/update`, {
+   await fetch(`${endpoints}/update`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

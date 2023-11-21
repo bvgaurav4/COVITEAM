@@ -166,3 +166,7 @@ INSERT INTO user_domain_interest (SRN, domain_id) VALUES
 ('SRN003', 'DM003');
 INSERT INTO users (SRN, Name, email, password, phone_number, dept_id) 
 VALUES ('SRN004', 'Alice Johnson', 'alicejohnson@example.com', 'password', '0987654321', 'D001');
+
+INSERT INTO messages (sender, group_id, message)
+VALUES 
+('SRN001', '999ec68e-8', 'Hello, this is John Doe.');
