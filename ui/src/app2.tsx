@@ -90,13 +90,9 @@ export default function AppShellDemo() {
   }
   useEffect(() => {
     getproj().then((data) => {
-      setProjects(null)
       setProjects(data);
     });
     getgrops().then((data) => {
-      console.log(data)
-
-      setGroups(null)
       setGroups(data);
     });
     getnoti().then((data) => {
@@ -203,11 +199,11 @@ You can now create your projects , Study groups in order to collaborate with oth
     >
       <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly" ,flexWrap:"wrap"}}>
       {JSON.parse(projects) && showProjects && JSON.parse(projects).map((prog,index) => (
-            <Demo2  key={prog.project_id} title={prog.project_name} description={prog.description} href={'nones'}  />
+            <Demo2  key={prog.project_id} title={prog.project_name} description={prog.description} href={'nones'} group_id={prog.project_id} namess='project_name' />
           )
           )}
           {JSON.parse(groups) && showGroups && JSON.parse(groups).map((group, index) => (
-            <Demo2 title={group.name} description={'none'} href={'nones'} key={group.group_id} group_id={group.group_id}  />
+            <Demo2 title={group.name} description={group.description} href={'nones'} key={group.group_id} group_id={group.group_id} table='study_groups' ids='group_id' />
           ))}
      { (showGroups) &&  <Creategroup/>}
      { (showProjects) &&  <Createproject/>}

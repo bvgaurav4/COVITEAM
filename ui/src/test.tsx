@@ -1,19 +1,54 @@
-import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
+import { Card, Image, Text, Badge, Button, Group,Modal, TextInput } from '@mantine/core';
+import { Burger } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { useEffect, useState } from 'react';
+
+
 import { useNavigate } from 'react-router-dom';
+const endpoints = 'http://localhost:4000'
 export function getGroup() {
   const groupId = localStorage.getItem('group_id');
-  return groupId ? groupId : null;
+  return groupId;
 }
-function Demo2({title = "Default Title", description = "Default Description", href = "#", badgeText = "Live", group_id="lol"} = {}) {
+function Demo2({title = "Default Title", description = "Default Description", href = "#", badgeText = "Live", group_id="lol",table="projects",ids="project_id",namess="name"} = {}) {
   const navigate = useNavigate();
+  const [opened, { toggle }] = useDisclosure(false);
+  const [opened1, { open, close }] = useDisclosure(false);
+  const label = opened ? 'Close navigation' : 'Open navigation';
+  const [groupId, setGroupId] = useState(title);
+  const [des, setdes] = useState(description);
+  function  lolredirect(){
+    navigate('/group');
+  }
 
-  function Opengroup() {
-    localStorage.setItem('group_id', group_id);
-    console.log("open group", title,group_id);
-    navigate(`/group`);
+  async function nope(event: React.FormEvent) {
+    event.preventDefault();
+    const response = await fetch(`${endpoints}/removerow`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "table":`${table}` ,"condition":`${ids}="${group_id}"` }),
+    });
+    window.location.reload();
+  }
+  async function yup(event: React.FormEvent){
+    event.preventDefault();
+    const response = await fetch(`${endpoints}/update`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "table":`${table}`,"condition":`${ids}="${group_id}" `, "newvalue":`${namess}="${groupId}" ,description="${des}" ` }),
+    });
+    window.location.reload();
   }
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder style={{width:"250px",height:"260px "}}>
+
+      <Group position="apart" mb="sm">
+         <Burger opened={opened1} onClick={open} aria-label={label} />
+      </Group>
       <Card.Section component="a" href={href}>
       </Card.Section>
 
@@ -23,12 +58,23 @@ function Demo2({title = "Default Title", description = "Default Description", hr
           {badgeText}
         </Badge>
       </Group>
-
       <Text size="sm" color="dimmed">
-        {description}
+        {title}</Text>
+      <Text size="sm" color="dimmed">
+        {description} {group_id}
       </Text>
-
-      <Button variant="light" color="blue" fullWidth mt="md" radius="md" onClick={Opengroup}>
+      <Modal opened={opened1} onClose={close} withCloseButton={false} centered transitionProps={{ transition: 'rotate-left' }} >
+        <Text size="xl" >Edit Info</Text>
+        <TextInput label="name" value={groupId} onChange={(e)=>setGroupId(e.currentTarget.value)}></TextInput>
+        <TextInput label="description" value={des} onChange={(e)=>setdes(e.currentTarget.value)}></TextInput>
+        <br></br>
+        <div style={{display:"flex", flexDirection:"column"}}>
+        <Button onClick={yup} color='green'>Save</Button>
+        <br></br>
+        <Button onClick={nope} color='red'>Delete {table}</Button>
+        </div>
+      </Modal>
+      <Button variant="light" color="violet" fullWidth mt="md" radius="md" onClick={lolredirect}>
         Open
       </Button>
     </Card>

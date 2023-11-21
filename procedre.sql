@@ -9,7 +9,7 @@ BEGIN
   JOIN users ON users.SRN = study_groups.SRN
   WHERE users.email = emailParam AND joins.state = 1;
 END //
-DELIMITER ;
+DELIMITER ;b
 
 
 DELIMITER //

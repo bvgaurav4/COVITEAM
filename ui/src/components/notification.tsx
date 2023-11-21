@@ -12,7 +12,6 @@ function Notifi({title,name,description}) {
       },
       body: JSON.stringify({ "table":"joins" ,"condition":`group_id="${title}" and SRN="${description}"` }),
     });
-    console.log(response);
     window.location.reload();
   }
   async function yup(event: React.FormEvent){
@@ -24,7 +23,6 @@ function Notifi({title,name,description}) {
       },
       body: JSON.stringify({ "table":"joins" ,"condition":`group_id="${title}" and SRN="${description}"`, "newvalue":`state="1"` }),
     });
-    console.log("yup");
     window.location.reload();
   }
 

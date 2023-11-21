@@ -12,10 +12,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
+
 func main() {
 	fmt.Println("Hello World")
 
-	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/coviteam1")
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/coviteam4")
 
 	if err != nil {
 		fmt.Println("v have and error", err.Error())
@@ -25,12 +26,12 @@ func main() {
 	defer db.Close()
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://127.0.0.1:5173",
+		AllowOrigins: "http://localhost:5173",
 
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 	app.Get("/healthcheck", func(c *fiber.Ctx) error {
-		return c.SendString("meow  meow nigga")
+		return c.SendString("server is up and running")
 	})
 	app.Post("/getgrps", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())

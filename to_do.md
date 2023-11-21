@@ -5,6 +5,8 @@
 - correleated query
 - make messages table
 - grops re-routing
+SLOT - THRUSDAY 215 TO 230
+
 - recomendation
 
   

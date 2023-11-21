@@ -44,6 +44,7 @@ CREATE TABLE study_groups (
   email varchar(40) NOT NULL,
   SRN varchar(15) NOT NULL,
   name varchar(255) NOT NULL,
+  description varchar(100),
   creation_date timestamp DEFAULT CURRENT_TIMESTAMP,
   photo MEDIUMBLOB,
   FOREIGN KEY (SRN) REFERENCES users(SRN)
@@ -93,6 +94,16 @@ CREATE TABLE log (
   operation VARCHAR(255),
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+CREATE TABLE messages(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  sender VARCHAR(255),
+  group_id VARCHAR(255),
+  message VARCHAR(255),
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (sender) REFERENCES users(SRN) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (group_id) REFERENCES study_groups(group_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 ALTER TABLE users ADD project_count INT DEFAULT 0;
 -- Sample data for department table
 INSERT INTO department (dept_id, name) VALUES
