@@ -26,7 +26,6 @@ import { endpoint } from './config';
 export const endpoints = endpoint
 export default function Group() {
   
-  const group_id = localStorage.getItem('group_id');
   const navigate = useNavigate();
   const theme = useMantineTheme();
   const [sending_message, setPassword] = useState('');
@@ -34,7 +33,8 @@ export default function Group() {
   const [messages, setMessages] = useState(null);
   const userEmail = getUserEmail();
   const [opened, setOpened] = useState(false);
-  const title=localStorage.getItem('group_name');
+  const group_id = localStorage.getItem('group_id');
+  const title = localStorage.getItem('group_name');
   const viewport = useRef(null);
 
  
@@ -91,26 +91,29 @@ export default function Group() {
         return response.text();
       }
 
-
   function oj() {
     //sending message function
     console.log('ok')
     console.log(sending_message)
-    nope3().then((data) => {
+    nope3().then(async (data) => {
       console.log(data);
       window.location.reload();
-    });
+       });
   }
   if (userEmail == null) {
     navigate('/');
   }
   useEffect(() => {
+    console.log("useeffects")
+    
     nope('joins',group_id).then((data) => {
       setMembers(data.body);
     });
     nope2('messages',group_id).then((data) => {
       setMessages((data.body));
     });
+    
+    
   }, []);
   return (
     <MantineProvider theme={{colorScheme:'dark'}}>
@@ -124,7 +127,11 @@ export default function Group() {
       asideOffsetBreakpoint="sm"
       navbar={
         <Navbar p="md" hiddenBreakpoint="md" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-              <Button variant="outline" color="violet" size='xl' >{title}</Button>
+          <Button variant="outline" color="violet" size='xl' >hello{title}</Button>
+          <Text color='white'>Description:</Text>
+          <Text color='white'>Group ID:{group_id}</Text>
+          <Text color='white'>Description:</Text>
+          <Text color='white' align='center'>Members:</Text>
               <br></br>
           <ScrollArea h={1000}>
           {JSON.parse(members)  && JSON.parse(members).map((prog,index) => (
