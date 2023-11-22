@@ -19,14 +19,14 @@ func main() {
 	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/coviteam4")
 
 	if err != nil {
-		fmt.Println("v have and error", err.Error())
+		fmt.Println("We have an error", err.Error())
 	} else {
-		fmt.Println("connected")
+		fmt.Println("connected to mysql server")
 	}
 	defer db.Close()
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:5173",
+		AllowOrigins: "*",
 
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
