@@ -1,7 +1,6 @@
 import { useState , useEffect,useRef} from 'react';
 import Demo2 from '../test.tsx';
 import getGroup from '../test.tsx';
-import { handlelogoClick } from '../app2.tsx';
 import Message from './message.tsx';
   import {
   AppShell,
@@ -36,7 +35,14 @@ export default function Group() {
   const userEmail = getUserEmail();
   const [opened, setOpened] = useState(false);
   const viewport = useRef<HTMLDivElement>(null);
+   const handlelogoClick = () => {
+    // Do something when the div is clicked
 
+    console.log('Div clicked!');
+    navigate('/home')
+    window.location.reload();
+  };
+  
   function handleLogout(){
       logout();
       navigate('/login');
