@@ -183,6 +183,7 @@ func main() {
 			return c.Status(500).SendString("Failed to insert data: ")
 		} else {
 			fmt.Println(str)
+
 			err := Query_exec1(db, lol["query"].(string))
 			if err != nil {
 				fmt.Println("v have got an error", err)
