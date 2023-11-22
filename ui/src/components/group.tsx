@@ -127,7 +127,7 @@ export default function Group() {
       asideOffsetBreakpoint="sm"
       navbar={
         <Navbar p="md" hiddenBreakpoint="md" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-          <Button variant="outline" color="violet" size='xl' >hello{title}</Button>
+          <Button variant="outline" color="violet" size='xl' >hello {title}</Button>
           <Text color='white'>Description:</Text>
           <Text color='white'>Group ID:{group_id}</Text>
           <Text color='white'>Description:</Text>
@@ -182,7 +182,7 @@ export default function Group() {
           <ScrollArea h={600} viewportRef={viewport}>
           {JSON.parse(messages) && JSON.parse(messages).map((group, index) => (
         <div >
-        <Message description={group.message}  table="groups" ids="group_id" namess={group.sender} />  
+        <Message description={group.message}  table="groups" ids="group_id" namess={group.sender} time_stamp={group.timestamp}/>  
       </div>          ))}
     </ScrollArea>
 

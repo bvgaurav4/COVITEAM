@@ -73,7 +73,9 @@ function Demo2({title = "Default Title", description = "Default Description", hr
       <Group position="apart" mt="md" mb="xs">
         <Text weight={500}>{title}</Text>
         <Group position="apart" mb="sm">
-         <Burger opened={opened1} onClick={open} aria-label={label} size="sm"/>
+          {
+              states!="request" && <Burger opened={opened1} onClick={open} aria-label={label} size="sm"/>
+          }
       </Group>
 
       </Group>

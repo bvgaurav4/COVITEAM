@@ -6,7 +6,7 @@ export function getGroup() {
   const groupId = localStorage.getItem('group_id');
   return groupId;
 }
-function Message({ description = "Default Description", group_id="lol",table="message",ids="project_id",namess="name"} = {}) {
+function Message({ description = "Default Description", group_id="lol",table="message",ids="project_id",namess="name",time_stamp=""} = {}) {
 
   async function nope(event: React.FormEvent) {
     event.preventDefault();
@@ -32,7 +32,10 @@ function Message({ description = "Default Description", group_id="lol",table="me
   }
   return (
     <Card shadow="sm" padding="xl" radius="md" withBorder style={{width:"100%",height:"100%"}}> 
+    <div style={{display:"flex",justifyContent:"space-between"}}>
     <Avatar size='sm' title='lol'/>
+    <Text size="sm" color="dimmed">{time_stamp}</Text>
+    </div>
     <Text>{namess}</Text>
     <Text size="sm" color="dimmed">
         {description}
