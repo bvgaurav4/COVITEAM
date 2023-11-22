@@ -10,10 +10,9 @@ const endpoints = endpoint
 function Createproject() {
   const navigate = useNavigate();
   const [Project_name, setGrpname] = useState('');
-  const [email, setEmail] = useState('');
   const [des, setdes] = useState('');
   const [domain, setDomain] = useState<string | null>(null);
-
+  const email=localStorage.getItem('user');
 
 
   async function handleSubmit(event: React.FormEvent) {
@@ -43,7 +42,6 @@ function Createproject() {
 
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput label="Email" placeholder="your@gmail.com" mt="md" required value={email} onChange={(e)=>setEmail(e.currentTarget.value)}  />
         <TextInput label="project Name" placeholder="like Mentos" required value={Project_name} onChange={(e)=>setGrpname(e.currentTarget.value)} />
         <TextInput label="description" placeholder="description" required value={des} onChange={(e)=>setdes(e.currentTarget.value)} />
         <Select
