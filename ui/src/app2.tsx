@@ -34,6 +34,10 @@ export default function AppShellDemo() {
   const [opened, setOpened] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
   const [showGroups, setShowGroups] = useState(false);
+  const[showallprojects,setShowallprojects]=useState(false);
+  const[showallgroups,setShowallgroups]=useState(false);
+  const[allprojects,setallprojects]=useState(null);
+  const[allgroups,setallgroups]=useState(null);
   var [projects, setProjects] = useState(null);
   var [groups, setGroups] = useState(null);
   var [noti, setNoti] = useState(null);
@@ -117,18 +121,16 @@ export default function AppShellDemo() {
   //   }
    
   // }
-  const getallgroupsorprojects = async (table: string) => {
-    // Function body...
+  const getallgroupsorprojects = async (table: string,condition: string) => {
     const response = await fetch(`${endpoints}/home`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ "table":`${table}`,"condition":`1` }),
+      body: JSON.stringify({ "table":`${table}`,"condition":`${condition}` }),
     });
     if (response.ok) {
       const data = await response.json();
-      console.log(data)
       return data.body;
     } else {
       console.log('Request failed');
@@ -141,6 +143,10 @@ export default function AppShellDemo() {
       setNoti(null)
       setNoti(data);
     });
+    getallgroupsorprojects("users",`email="${userEmail}"`).then((data) => {
+      console.log("all projects");
+      localStorage.setItem('srn', JSON.parse(data)[0].SRN);
+    });
   }, []);
 
 function handleLogout(){
@@ -150,38 +156,43 @@ function handleLogout(){
   function handleProject(){
     getproj().then((data) => {
       console.log("custom projects");
-      console.log(data);
       setProjects(data);
     });
     setShowGroups(false);
+    setShowallgroups(false);
+    setShowallprojects(false);
     setShowProjects(true);
   }
   function handleAllProject(){
     console.log("recommended projects clicked")
-    getallgroupsorprojects("Projects").then((data) => {
+    getallgroupsorprojects("projects","1").then((data) => {
       console.log("all projects");
-      console.log(data);
-      setProjects(data);
+      setallprojects(data);
     });
-
     setShowGroups(false);
-    setShowProjects(true);
+    setShowProjects(false);
+    setShowallgroups(false);
+    setShowallprojects(true);
   }
   function handleGroup(){
     getgrops().then((data) => {
       console.log("custom groups");
-      console.log(data);
       setGroups(data);
     });
     setShowGroups(true);
     setShowProjects(false);
+    setShowallgroups(false);
+    setShowallprojects(false);
   }
   function handleAllGroup(){
     console.log("recommended groups clicked")
-    getallgroupsorprojects("study_groups").then((data) => {
-      setGroups(data);
+    getallgroupsorprojects("study_groups","1").then((data) => {
+      setallgroups(data);
     });
-    setShowGroups(true);
+    setShowallgroups(true);
+    console.log(allprojects, allgroups)
+    setShowallprojects(false);
+    setShowGroups(false);
     setShowProjects(false);
   }
 
@@ -277,6 +288,13 @@ You can now create your projects , Study groups in order to collaborate with oth
           )}
           {JSON.parse(groups) && showGroups && JSON.parse(groups).map((group, index) => (
             <Demo2 title={group.name} description={group.description} href={'nones'} key={group.group_id} group_id={group.group_id} table='study_groups' ids='group_id' />
+          ))}
+          {JSON.parse(allprojects) && showallprojects && JSON.parse(allprojects).map((prog,index) => (
+            <Demo2  key={prog.project_id} title={prog.project_name} description={prog.description} href={'nones'} group_id={prog.project_id} namess='project_name' states='request' reqtable='works_on(project_id,SRN,permission_level)' />
+          )
+          )}
+          {JSON.parse(allgroups) && showallgroups && JSON.parse(allgroups).map((group, index) => (
+            <Demo2 title={group.name} description={group.description} href={'nones'} key={group.group_id} group_id={group.group_id} table='study_groups' ids='group_id' states='request'/>
           ))}
      { (showGroups) &&  <Creategroup/>}
      { (showProjects) &&  <Createproject/>}

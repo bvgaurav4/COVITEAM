@@ -73,7 +73,6 @@ BEGIN
 END //
 DELIMITER ;
 
-GRANT All PRIVILEGES ON database_name.table_name TO 'username'@'host';
 
 DELIMITER //
 CREATE PROCEDURE messaging(IN group_id VARCHAR(10), in emailParam VARCHAR(40), in message VARCHAR(100))

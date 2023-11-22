@@ -35,7 +35,13 @@ export default function Group() {
   const userEmail = getUserEmail();
   const [opened, setOpened] = useState(false);
   const title=localStorage.getItem('group_name');
-  const viewport = useRef<HTMLDivElement>(null);
+  const viewport = useRef(null);
+
+ 
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+
    const handlelogoClick = () => {
     // Do something when the div is clicked
 
@@ -84,6 +90,8 @@ export default function Group() {
         console.log(response);
         return response.text();
       }
+
+
   function oj(){
     console.log('ok')
     console.log(sending_message)

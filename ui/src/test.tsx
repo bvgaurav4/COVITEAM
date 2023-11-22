@@ -11,7 +11,7 @@ export function getGroups() {
   console.log("whhat is this",localStorage.getItem('group_id'));
   return localStorage.getItem('group_id');
 }
-function Demo2({title = "Default Title", description = "Default Description", href = "#", badgeText = "Live", group_id="lol",table="projects",ids="project_id",namess="name"} = {}) {
+function Demo2({title = "Default Title", description = "Default Description", href = "#", badgeText = "Live", group_id="lol",table="projects",ids="project_id",namess="name",states="Open",reqtable="joins(group_id,SRN,state)"} = {}) {
   const navigate = useNavigate();
   const [opened, { toggle }] = useDisclosure(false);
   const [opened1, { open, close }] = useDisclosure(false);
@@ -22,7 +22,22 @@ function Demo2({title = "Default Title", description = "Default Description", hr
     console.log(group_id);
     localStorage.setItem('group_id', group_id); 
     localStorage.setItem('group_name', title);
+    if(states=="request"){
+      requesting();
+    }
+    if(states=="Open"){
     navigate('/group');
+  }
+  }
+  async function requesting(){
+    await fetch(`${endpoints}/custom_nonreturn_query`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "query":`insert into ${reqtable} values ("${group_id}","${localStorage.getItem('srn')}",0)` }),
+    });
+    console.log("requesting");
   }
 
   async function nope(event: React.FormEvent) {
@@ -83,7 +98,7 @@ function Demo2({title = "Default Title", description = "Default Description", hr
         </div>
       </Modal>
       <Button variant="light" color="violet" fullWidth mt="md" radius="md" onClick={lolredirect}>
-        Open
+        {states}
       </Button>
     </Card>
   );

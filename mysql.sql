@@ -112,8 +112,8 @@ INSERT INTO department (dept_id, name) VALUES
 ('D003', 'Mechanical Engineering');
 
 -- Sample data for domain table
-INSERT INTO domain (domain_id, name, description, skills) VALUES
-('DM001', 'Web Development', 'Developing web applications', 'HTML, CSS, JavaScript'),
+  INSERT INTO domain (domain_id, name, description, skills) VALUES
+  ('DM001', 'Web Development', 'Developing web applications', 'HTML, CSS, JavaScript'),
 ('DM002', 'Mobile Development', 'Developing mobile applications', 'Java, Kotlin, Swift'),
 ('DM003', 'Data Science', 'Extracting insights from data', 'Python, R, SQL');
 
