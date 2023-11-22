@@ -92,7 +92,8 @@ export default function Group() {
       }
 
 
-  function oj(){
+  function oj() {
+    //sending message function
     console.log('ok')
     console.log(sending_message)
     nope3().then((data) => {
