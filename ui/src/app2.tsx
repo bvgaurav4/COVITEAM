@@ -168,6 +168,8 @@ function handleLogout(){
   }
   function handleGroup(){
     getgrops().then((data) => {
+      console.log("custom groups");
+      console.log(data);
       setGroups(data);
     });
     setShowGroups(true);

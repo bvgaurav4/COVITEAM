@@ -3,13 +3,13 @@
 DELIMITER //
 CREATE PROCEDURE GetStudyGroupsJoinJoinsUsers(IN emailParam VARCHAR(40))
 BEGIN
-  SELECT DISTINCT study_groups.group_id, study_groups.name, study_groups.creation_date, study_groups.photo
+  SELECT DISTINCT study_groups.group_id, study_groups.name, study_groups.creation_date, study_groups.photo,study_groups.description
   FROM study_groups 
   JOIN joins ON study_groups.group_id = joins.group_id
   JOIN users ON users.SRN = study_groups.SRN
   WHERE users.email = emailParam AND joins.state = 1;
 END //
-DELIMITER ;b
+DELIMITER ;
 
 
 DELIMITER //
