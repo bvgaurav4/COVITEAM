@@ -21,6 +21,7 @@ function Demo2({title = "Default Title", description = "Default Description", hr
   function  lolredirect(){
     console.log(group_id);
     localStorage.setItem('group_id', group_id); 
+    localStorage.setItem('group_name', title);
     navigate('/group');
   }
 

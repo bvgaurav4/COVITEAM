@@ -34,6 +34,7 @@ export default function Group() {
   const [messages, setMessages] = useState(null);
   const userEmail = getUserEmail();
   const [opened, setOpened] = useState(false);
+  const title=localStorage.getItem('group_name');
   const viewport = useRef<HTMLDivElement>(null);
    const handlelogoClick = () => {
     // Do something when the div is clicked
@@ -72,7 +73,7 @@ export default function Group() {
       }
       const scrollToBottom = () =>
       viewport.current.scrollTo({ top: viewport.current.scrollHeight, behavior: 'smooth' });
-      async function nope3() {
+       const nope3 = async () =>   {
         const response = await fetch(`${endpoints}/custom_nonreturn_query`, {
           method: 'POST',
           headers: {
@@ -81,17 +82,15 @@ export default function Group() {
           body: JSON.stringify({ "query":`call messaging("${group_id}","${userEmail}","${sending_message}")` }),
         });
         console.log(response);
-        return response.json();
+        return response.text();
       }
   function oj(){
     console.log('ok')
     console.log(sending_message)
     nope3().then((data) => {
-      console.log(data.body)
-      setMessages(data.body);
+      console.log(data);
+      window.location.reload();
     });
-          window.location.reload();
-
   }
   if (userEmail == null) {
     navigate('/');
@@ -101,7 +100,7 @@ export default function Group() {
       setMembers(data.body);
     });
     nope2('messages',group_id).then((data) => {
-      setMessages(data.body);
+      setMessages((data.body));
     });
   }, []);
   return (
@@ -115,8 +114,9 @@ export default function Group() {
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       navbar={
-        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-              <Button variant="outline" color="violet" >{group_id}</Button>
+        <Navbar p="md" hiddenBreakpoint="md" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+              <Button variant="outline" color="violet" size='xl' >{title}</Button>
+              <br></br>
           <ScrollArea h={1000}>
           {JSON.parse(members)  && JSON.parse(members).map((prog,index) => (
             <Demo2  key={prog.group_id} title={prog.Name}  href={'nones'} group_id={prog.group_id} namess='SRN' group_id={prog.SRN} />
@@ -171,8 +171,8 @@ export default function Group() {
     </ScrollArea>
 
 
-      <div style={{display:"flex", position:"fixed",right:"2em", bottom:"6.5em"}}>
-        <TextInput placeholder='message' style={{width:'70em'}} value={sending_message} onChange={(e)=>setPassword(e.currentTarget.value)}></TextInput>
+      <div style={{display:"flex"}}>
+        <TextInput placeholder='message' style={{width:'100%'}} value={sending_message} onChange={(e)=>setPassword(e.currentTarget.value)}></TextInput>
         <Button onClick={oj}>send</Button>
         <Button onClick={scrollToBottom} variant="outline">
           Scroll to bottom
