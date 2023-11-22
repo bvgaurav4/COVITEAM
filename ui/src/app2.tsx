@@ -98,13 +98,44 @@ export default function AppShellDemo() {
     }
    
   }
+  // const getallprojs = async () => {
+  //   const response = await fetch(`${endpoints}/home`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ "table":`Projects`,"condition":`group_id="${group_id}"  order by timestamp` }),
+  //   });
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     console.log(data)
+  //     return data.body;
+  //   } else {
+  //     console.log('Request failed');
+  //     return null;
+  //   }
+   
+  // }
+  const getallgroupsorprojects = async (table: string) => {
+    // Function body...
+    const response = await fetch(`${endpoints}/home`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "table":`${table}`,"condition":`1` }),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data)
+      return data.body;
+    } else {
+      console.log('Request failed');
+      return null;
+    }
+   
+  }
   useEffect(() => {
-    getproj().then((data) => {
-      setProjects(data);
-    });
-    getgrops().then((data) => {
-      setGroups(data);
-    });
     getnoti().then((data) => {
       setNoti(null)
       setNoti(data);
@@ -116,11 +147,37 @@ function handleLogout(){
   navigate('/login');
 }
   function handleProject(){
+    getproj().then((data) => {
+      console.log("custom projects");
+      console.log(data);
+      setProjects(data);
+    });
     setShowGroups(false);
     setShowProjects(true);
   }
+  function handleAllProject(){
+    console.log("recommended projects clicked")
+    getallgroupsorprojects("Projects").then((data) => {
+      console.log("all projects");
+      console.log(data);
+      setProjects(data);
+    });
 
+    setShowGroups(false);
+    setShowProjects(true);
+  }
   function handleGroup(){
+    getgrops().then((data) => {
+      setGroups(data);
+    });
+    setShowGroups(true);
+    setShowProjects(false);
+  }
+  function handleAllGroup(){
+    console.log("recommended groups clicked")
+    getallgroupsorprojects("study_groups").then((data) => {
+      setGroups(data);
+    });
     setShowGroups(true);
     setShowProjects(false);
   }
@@ -148,9 +205,9 @@ function handleLogout(){
           <br></br>
           <Button variant="outline" color="violet" onClick={handleGroup}>Your groups</Button>
           <br></br>
-          <Button variant="outline" color="violet" onClick={oj}>Recommended projects</Button> 
+          <Button variant="outline" color="violet" onClick={handleAllProject}>Recommended projects</Button> 
           <br></br>
-          <Button variant="outline" color="violet" onClick={oj}>Recommended groups</Button>
+          <Button variant="outline" color="violet" onClick={handleAllGroup}>Recommended1 groups</Button>
         </Navbar>
       }
       aside={
