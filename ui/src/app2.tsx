@@ -14,6 +14,7 @@ import {
   useMantineTheme,
   Button,
   MantineProvider,
+  ScrollArea,
 } from '@mantine/core';
 import  Creategroup from "./components/create_group.tsx"
 import Notifi from "./components/notification.tsx"
@@ -227,6 +228,7 @@ function handleLogout(){
       aside={
         <MediaQuery smallerThan="sm" styles={{ display: 'none' }} >
           <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 400 }} >
+          <ScrollArea h={600}>
             <Notification color="violet" title="Welcome to Coviteam: Collaborative Team Network" onClose={close}>
 You can now create your projects , Study groups in order to collaborate with others      </Notification>
       <br></br>
@@ -234,7 +236,7 @@ You can now create your projects , Study groups in order to collaborate with oth
       {JSON.parse(noti) && JSON.parse(noti).map((prog,index) => (
             <Notifi  key={prog.group_id} title={prog.group_id} description={prog.SRN} name={prog.name} href={'nones'} badgeText={'none'} />
           )
-          )}
+          )}</ScrollArea>
 
 
           </Aside>
