@@ -66,9 +66,9 @@ function Demo2({title = "Default Title", description = "Default Description", hr
           {badgeText}
         </Badge>
       <Text size="sm" color="dimmed">
-       {ids} {group_id}</Text>
+       {ids}:{group_id}</Text>
       <Text size="sm" color="dimmed">
-        {description}
+        Description:{description}
       </Text>
       <Modal opened={opened1} onClose={close} withCloseButton={false} centered transitionProps={{ transition: 'rotate-left' }} >
         <Text size="xl" >Edit Info</Text>
