@@ -202,7 +202,6 @@ You can now create your projects , Study groups in order to collaborate with oth
             <img src='/vite.svg' className='logo' onClick={oj}></img>
               <Text fw={500} size="xl" color='violet'>COVITEAM</Text>
             </div>
-            {/* <TextInput radius="xl" placeholder="search " /> */}
             <SearchComponent></SearchComponent>
           </div>
         </Header>

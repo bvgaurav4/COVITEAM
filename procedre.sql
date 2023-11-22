@@ -82,3 +82,17 @@ BEGIN
     select SRN into sender from users where email = emailParam;
     INSERT INTO messages (sender, group_id, message) VALUES (sender, group_id, message);
 END //
+
+
+-- correleated query to get all the members of a group
+DELIMITER //
+CREATE PROCEDURE getgroupmem(in group_id_sent VARCHAR(10))
+BEGIN
+SELECT u.*
+FROM users u
+WHERE EXISTS (
+    SELECT 1
+    FROM joins j
+    WHERE j.SRN = u.SRN AND j.group_id = group_id_sent);
+  END //
+  DELIMITER ;

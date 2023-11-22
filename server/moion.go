@@ -160,6 +160,20 @@ func main() {
 		}
 
 	})
+	app.Post("/custom_returnin_query", func(c *fiber.Ctx) error {
+		var str string = string(c.Body())
+		fmt.Println(str)
+		var lol map[string]interface{}
+		err := json.Unmarshal([]byte(str), &lol)
+		if err != nil {
+			fmt.Println("v have error", err)
+			return c.Status(500).SendString("Failed to insert data: ")
+		} else {
+			fmt.Println(str)
+			var teststring string = Query_exec(db, lol["query"].(string))
+			return c.JSON(fiber.Map{"body": teststring})
+		}
+	})
 	app.Post("/custom_nonreturn_query", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())
 		var lol map[string]interface{}

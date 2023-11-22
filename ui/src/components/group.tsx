@@ -40,17 +40,18 @@ export default function Group() {
       logout();
       navigate('/login');
   }   
-  async function nope(table,group_id) {
-        const response = await fetch(`${endpoints}/home`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ "table":`${table}`,"condition":`group_id="${group_id}" and state=1` }),
-        });
-        console.log(response);
-        return response.json();
-      }
+  async function nope(table, group_id) {
+    const response = await fetch(`${endpoints}/custom_returnin_query`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "query": `call getgroupmem("${group_id}")` }),
+    });
+  
+    console.log(response);
+    return response.json();
+  }
       async function nope2(table,group_id) {
         const response = await fetch(`${endpoints}/home`, {
           method: 'POST',
@@ -111,7 +112,7 @@ export default function Group() {
               <Button variant="outline" color="violet" >{group_id}</Button>
           <ScrollArea h={1000}>
           {JSON.parse(members)  && JSON.parse(members).map((prog,index) => (
-            <Demo2  key={prog.group_id} title={prog.SRN}  href={'nones'} group_id={prog.group_id} namess='SRN' />
+            <Demo2  key={prog.group_id} title={prog.Name}  href={'nones'} group_id={prog.group_id} namess='SRN' group_id={prog.SRN} />
           )
           )}
             </ScrollArea>
