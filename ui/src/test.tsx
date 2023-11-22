@@ -66,7 +66,7 @@ function Demo2({title = "Default Title", description = "Default Description", hr
           {badgeText}
         </Badge>
       <Text size="sm" color="dimmed">
-        {group_id}</Text>
+       {ids} {group_id}</Text>
       <Text size="sm" color="dimmed">
         {description}
       </Text>
