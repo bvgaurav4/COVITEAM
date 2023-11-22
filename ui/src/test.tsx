@@ -25,9 +25,13 @@ function Demo2({title = "Default Title", description = "Default Description", hr
     if(states=="request"){
       requesting();
     }
-    if(states=="Open"){
-    navigate('/group');
-  }
+    if(table!="projects"){
+    navigate('/group');}
+    if(table=="projects"){
+      navigate('/project');
+
+    }
+  
   }
   async function requesting(){
     await fetch(`${endpoints}/custom_nonreturn_query`, {

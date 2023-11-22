@@ -8,6 +8,7 @@ import './index.css'
 import Group from './components/group.tsx'
 import GameOfLife from './components/gameoflife.tsx'
 import Creating from './components/creating_user.tsx'
+import Projectpage from './components/project.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/group" element={<Group />} />
         <Route path="/game" element={<GameOfLife />} />
         <Route path="/signup" element={<Creating/>} />
+        <Route path="/project" element={<Projectpage/>} />
       </Routes>
     </Router>
   </React.StrictMode>

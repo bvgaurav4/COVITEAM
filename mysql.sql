@@ -103,6 +103,13 @@ CREATE TABLE messages(
   FOREIGN KEY (sender) REFERENCES users(SRN) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (group_id) REFERENCES study_groups(group_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE TABLE ProjectCodes (
+    id INT AUTO_INCREMENT,
+    project_id VARCHAR(10),
+    code TEXT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (project_id) REFERENCES projects(project_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 ALTER TABLE users ADD project_count INT DEFAULT 0;
 -- Sample data for department table

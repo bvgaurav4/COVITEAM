@@ -28,6 +28,11 @@ npm run dev
 ```bash  
 go run moion.go
 ```
+```bash
+npm install @mantine/prism
+```
+
+
 ## change the directory to ui or server before running the respective
 
 ### use test.tsx and test.css for experimenting 
