@@ -1,6 +1,7 @@
 import { useState , useEffect,useRef} from 'react';
 import Demo2 from '../test.tsx';
-import  getGroup  from '../test.tsx';
+import getGroup from '../test.tsx';
+import { handlelogoClick } from '../app2.tsx';
 import Message from './message.tsx';
   import {
   AppShell,
@@ -145,7 +146,7 @@ export default function Group() {
                 mr="xl"
               />
             </MediaQuery>
-            <div>
+            <div className='logoplus' onClick={handlelogoClick}>
             <img src='/vite.svg' className='logo'></img>
             <Text fw={500} size="xl" color='violet'>COVITEAM</Text></div>
             <TextInput radius="xl" placeholder="search " />

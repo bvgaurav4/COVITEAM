@@ -24,11 +24,18 @@ import './App.css';
 import { useNavigate } from 'react-router-dom';
 import {endpoint} from './components/config';
 import SearchComponent from './components/search_component.tsx';
-
+const navigate = useNavigate();
 export const endpoints = endpoint
+export const handlelogoClick = () => {
+    // Do something when the div is clicked
 
+    console.log('Div clicked!');
+    navigate('/home')
+    window.location.reload();
+  };
+  
 export default function AppShellDemo() {
-  const navigate = useNavigate();
+  
   const userEmail = getUserEmail();
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
@@ -73,14 +80,7 @@ export default function AppShellDemo() {
       return null;
     }
   }
-  const handlelogoClick = () => {
-    // Do something when the div is clicked
-
-    console.log('Div clicked!');
-    navigate('/home')
-    window.location.reload();
-    // Add your logic here
-  };
+   
   const getproj = async () => {
     const response = await fetch(`${endpoints}/getproj`, {
       method: "POST",
