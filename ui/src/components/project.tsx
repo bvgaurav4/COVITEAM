@@ -45,6 +45,7 @@ export default function Projectpage() {
   const group_id = localStorage.getItem('group_id');
   const title = localStorage.getItem('group_name');
   const viewport = useRef(null);
+  console.log(file)
   const lol=`import React from 'react'
   import ReactDOM from 'react-dom/client'
   import AuthenticationTitle  from './login.tsx'
@@ -113,25 +114,31 @@ export default function Projectpage() {
         return response.json();
       }
 
-       const nope3 = async () =>   {
-        const response = await fetch(`${endpoints}/custom_nonreturn_query`, {
+      const nope3 = async () => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('project_id', group_id);  
+        formData.append('user_id', userEmail);
+        const response = await fetch(`${endpoints}/file_upload  `, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ "query":`call messaging("${group_id}","${userEmail}","${sending_message}")` }),
+          body: formData,
         });
         console.log(response);
         return response.text();
       }
-
+  function calling(){    
+    console.log('ok')
+    console.log(sending_message)
+    nope3().then(async (data) => {
+      console.log(data);
+       });  
+  }
   function oj() {
     //sending message function
     console.log('ok')
     console.log(sending_message)
     nope3().then(async (data) => {
       console.log(data);
-      window.location.reload();
        });
   }
   if (userEmail == null) {
@@ -217,7 +224,7 @@ export default function Projectpage() {
 <Prism language="tsx" >{lol}</Prism>
 <>
       <Group justify="center">
-        <FileButton resetRef={resetRef} onChange={setFile} accept="">
+        <FileButton resetRef={resetRef} onChange={setFile} accept=""> 
           {(props) => <Button {...props}>Upload file</Button>}
         </FileButton>
         <Button disabled={!file} color="red" onClick={clearFile}>
@@ -230,6 +237,7 @@ export default function Projectpage() {
           Picked file: {file.name}
         </Text>
       )}
+      <Button onClick={calling}>sending</Button>
     </>     
     </AppShell>
     </MantineProvider>

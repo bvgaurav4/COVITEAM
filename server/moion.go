@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"os"
 	"reflect"
 	"strings"
 
@@ -28,7 +29,8 @@ func main() {
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
 
-		AllowHeaders: "Origin, Content-Type, Accept",
+		AllowHeaders:     "Origin, Content-Type, Accept",
+		AllowCredentials: true,
 	}))
 	app.Get("/healthcheck", func(c *fiber.Ctx) error {
 		return c.SendString("server is up and running")
@@ -80,6 +82,30 @@ func main() {
 		return c.JSON(fiber.Map{"body": teststring})
 	})
 
+	app.Post("/file_upload", func(c *fiber.Ctx) error {
+		// Get the file from the form
+		file, err := c.FormFile("file")
+		if err != nil {
+			fmt.Println("Error retrieving file from form:", err)
+			return c.Status(500).SendString("Failed to retrieve file from form: " + err.Error())
+		}
+		fmt.Println(file.Filename)
+		err = os.MkdirAll("./uploads", os.ModePerm)
+		if err != nil {
+			fmt.Println("Error creating directory:", err)
+			return c.Status(500).SendString("Failed to create directory: " + err.Error())
+		}
+		// Save the file to disk
+		err = c.SaveFile(file, "./uploads/"+file.Filename)
+		if err != nil {
+			fmt.Println("Error saving file:", err)
+			return c.Status(500).SendString("Failed to save file: " + err.Error())
+		}
+
+		// Get the other form values
+
+		return c.Status(200).SendString("ok")
+	})
 	app.Post("/newuser", func(c *fiber.Ctx) error {
 		var str string = string(c.Body())
 		var lol map[string]interface{}
