@@ -28,12 +28,16 @@ import { endpoint } from './config';
 
 export const endpoints = endpoint
 export default function Projectpage() {
-    const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [uploaded, setUploaded] = useState(null);
     const resetRef = useRef<() => void>(null);
   
     const clearFile = () => {
       setFile(null);
+      setUploaded(null);
       resetRef.current?.();
+
+
     };
   const navigate = useNavigate();
   const theme = useMantineTheme();
@@ -131,7 +135,9 @@ export default function Projectpage() {
     console.log(sending_message)
     nope3().then(async (data) => {
       console.log(data);
-       });  
+    });  
+    setUploaded('true');
+    
   }
   function oj() {
     //sending message function
@@ -232,12 +238,17 @@ export default function Projectpage() {
         </Button>
       </Group>
 
-      {file && (
+      {uploaded && (
+        <Text size="sm" ta="center" mt="sm" color='violet'>
+          File uploaded successfully!
+        </Text>
+      )}
+          <Button onClick={calling}>Confirm to Upload</Button>
+          {file && (
         <Text size="sm" ta="center" mt="sm" color='violet'>
           Picked file: {file.name}
         </Text>
       )}
-      <Button onClick={calling}>sending</Button>
     </>     
     </AppShell>
     </MantineProvider>
