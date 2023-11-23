@@ -59,7 +59,7 @@ export default function AuthenticationTitle() {
       <form>
     <Container size={500} my={40} >
       <Title ta="center" className='title' color='white'>
-        Welcome back to Coviteam!
+        Welcome back to Coviteam!   
       </Title>
       <Text c="dimmed" size="sm" ta="center" mt={5}>
         Do not have an account yet?{' '}
