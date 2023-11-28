@@ -29,8 +29,7 @@ func main() {
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
 
-		AllowHeaders:     "Origin, Content-Type, Accept",
-		AllowCredentials: true,
+		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 	app.Get("/healthcheck", func(c *fiber.Ctx) error {
 		return c.SendString("server is up and running")

@@ -248,7 +248,7 @@ You can now create your projects , Study groups in order to collaborate with oth
             <div style={{display: 'flex', alignItems: 'center', height: '100%' ,justifyContent:'space-between'}}>
           <div><Button variant="transparent" color="violet" onClick={handleLogout }>logout/change account</Button>
             </div>
-            <Avatar radius="xl" className='logo'/>
+            <Avatar radius="xl" />
 
           <Text color='white'>{userEmail}</Text>
           </div>

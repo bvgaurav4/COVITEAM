@@ -25,11 +25,13 @@ function Demo2({title = "Default Title", description = "Default Description", hr
     if(states=="request"){
       requesting();
     }
-    if(table!="projects"){
-    navigate('/group');}
-    if(table=="projects"){
-      navigate('/project');
+    else{
 
+      if(table!="projects"){
+      navigate('/group');}
+      if(table=="projects"){
+        navigate('/project');
+      }
     }
   
   }
